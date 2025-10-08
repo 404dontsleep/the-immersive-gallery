@@ -1,0 +1,4 @@
+data/
+postgres-data/
+letsencrypt/
+redis_data/

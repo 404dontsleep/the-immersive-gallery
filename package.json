@@ -1,0 +1,26 @@
+{
+  "name": "the-immersive-gallery-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspaces run dev",
+    "build": "yarn workspaces run build",
+    "test": "yarn workspaces run test",
+    "lint": "yarn workspaces run lint"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,css,scss,md}": [
+      "node -e \"const fs = require('fs'); const path = process.argv[1]; try { const content = fs.readFileSync(path, 'utf8'); if (content.includes('\\r\\n')) { console.error('❌ File ' + path + ' contains CRLF line endings. Please convert to LF.'); process.exit(1); } } catch(e) { console.error('Error checking file:', e.message); process.exit(1); }\""
+    ]
+  },
+  "resolutions": {
+    "three": "0.179.1"
+  }
+}

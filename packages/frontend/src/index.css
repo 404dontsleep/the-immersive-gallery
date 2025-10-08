@@ -1,0 +1,54 @@
+@import 'tailwindcss';
+
+body {
+  font-family:
+    'Segoe UI', 'Segoe UI Emoji', 'Segoe UI Symbol', system-ui, sans-serif;
+}
+
+.lucide:not([class*='w-']):not([class*='h-']) {
+  @apply w-[18px] h-[18px];
+}
+
+/* Biến màu dễ chỉnh (đang tối, không bị trắng) */
+:root {
+  --sb-size: 8px;
+  --sb-track: rgba(255,255,255,0.01);
+  --sb-thumb: rgba(255,255,255,0.2);
+  --sb-thumb-hover: rgba(255,255,255,0.5);
+  --sb-corner: rgba(255,255,255,0.0);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;              /* thin | auto | none */
+  scrollbar-color: var(--sb-thumb) var(--sb-track);
+}
+
+/* WebKit (Chrome, Edge, Safari) */
+*::-webkit-scrollbar {
+  width: var(--sb-size);
+  height: var(--sb-size);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--sb-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--sb-thumb), var(--sb-thumb));
+  border-radius: 999px;
+  border: 2px solid transparent;        /* tạo khoảng hở để nhìn gọn */
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--sb-thumb-hover), var(--sb-thumb-hover));
+}
+
+*::-webkit-scrollbar-corner {
+  background: var(--sb-corner);
+}
+
+.ant-input-number {
+  width: 100%;
+}

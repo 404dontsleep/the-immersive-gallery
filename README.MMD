@@ -1,0 +1,29 @@
+flowchart TD
+    subgraph CLOUD_A[VPS A]
+        subgraph FE[Frontend]
+        end
+        subgraph BE[Backend]
+        end
+        subgraph DB[Database]
+            PG[PostgreSQL]
+            CACHE[Redis]
+        end
+        BE <--> DB
+        BE <--> FE
+    end
+    subgraph TELE[Image Storage]
+        TELE_INPUT[Telegram Input]
+        TELE_OUTPUT[Telegram Output]
+        TELE_INPUT --> TELE_OUTPUT
+    end
+    subgraph CLOUD_B[VPS B]
+        TELE <--> IMAGE_PROCESS[Image Processing] <--> BE
+        TASK_PROCESS[Task Processing] <--> BE
+        CRON_PROCESS[Cron Processing] <--> BE
+    end    
+    subgraph USER[Users]
+        BE --> DISCORD[Discord]
+        BE --> TELEGRAM[Telegram]
+        GOOGLE[Google] -->|Login| FE
+    end
+    
