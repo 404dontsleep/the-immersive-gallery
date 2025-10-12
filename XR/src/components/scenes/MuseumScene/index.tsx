@@ -1,9 +1,11 @@
-import { useFrame, type GroupProps } from '@react-three/fiber';
-import { useState } from 'react';
-import { Quaternion, Vector3 } from 'three';
+import { useFrame, type GroupProps } from "@react-three/fiber";
+import { useRef, useState } from "react";
+import { Quaternion, Vector3 } from "three";
 
-import * as buffer from 'maath/buffer';
-import { Points } from '@react-three/drei';
+import * as random from "maath/random";
+import * as buffer from "maath/buffer";
+import * as misc from "maath/misc";
+import { Points } from "@react-three/drei";
 
 const rotationAxis = new Vector3(0, 0, 1).normalize();
 const q = new Quaternion();
@@ -15,8 +17,8 @@ const SIZE = {
   WALL_THICKNESS: 0.01,
 };
 const walls: {
-  position: GroupProps['position'];
-  rotation: GroupProps['rotation'];
+  position: GroupProps["position"];
+  rotation: GroupProps["rotation"];
   size: [number, number, number];
 }[] = [
   {
@@ -134,9 +136,9 @@ export default function MuseumScene() {
           <meshPhongMaterial color="#ffffff" />
         </mesh>
         <group position={[0, 0.9, 0]}>
-          {/* <Points positions={final as Float32Array}>
+          <Points positions={final as Float32Array}>
             <pointsMaterial size={0.01} />
-          </Points> */}
+          </Points>
           <mesh castShadow receiveShadow>
             <torusGeometry args={[0.1, 0.02, 16, 64]} />
             <meshNormalMaterial />
