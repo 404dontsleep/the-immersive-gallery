@@ -115,11 +115,11 @@ export default function MuseumScene() {
       <ambientLight intensity={0.4} />
       <directionalLight position={[5, 10, 5]} intensity={0.6} castShadow />
       <directionalLight position={[-5, 5, -5]} intensity={0.6} castShadow />
-      <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+      {/* <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[SIZE.WIDTH, SIZE.DEPTH]} />
         <meshPhongMaterial color="#ffffff" />
-      </mesh>
-      {walls.map((wall, index) => (
+      </mesh> */}
+      {/* {walls.map((wall, index) => (
         <mesh
           key={index}
           position={wall.position}
@@ -129,16 +129,13 @@ export default function MuseumScene() {
           <boxGeometry args={wall.size} />
           <meshPhongMaterial color="#ffffff" />
         </mesh>
-      ))}
+      ))} */}
       <group name="exhibit" position={[0, 0, -1]}>
         <mesh position={[0, 0.35, 0]} castShadow receiveShadow>
           <boxGeometry args={[0.4, 0.7, 0.4]} />
           <meshPhongMaterial color="#ffffff" />
         </mesh>
         <group position={[0, 0.9, 0]}>
-          <Points positions={final as Float32Array}>
-            <pointsMaterial size={0.01} />
-          </Points>
           <mesh castShadow receiveShadow>
             <torusGeometry args={[0.1, 0.02, 16, 64]} />
             <meshNormalMaterial />

@@ -8,7 +8,9 @@ export default defineConfig({
   plugins: [react(), tailwindcss(), basicSsl()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
+    dedupe: ['three'],
   },
 });
+// vite.config.js
