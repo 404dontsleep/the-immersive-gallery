@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 export enum MenuType {
+  HOME = 'home',
   TUTORIAL = 'tutorial',
   ITEM_LIST = 'item-list',
   ITEM_DETAILS = 'item-details',
@@ -21,6 +22,6 @@ export interface MenuStore {
 export const useMenuStore = create<MenuStore>((set) => ({
   mode: MenuMode.WEB,
   setMode: (mode) => set({ mode }),
-  currentMenu: MenuType.TUTORIAL,
+  currentMenu: MenuType.HOME,
   setCurrentMenu: (menu) => set({ currentMenu: menu }),
 }));

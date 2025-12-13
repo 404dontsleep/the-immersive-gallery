@@ -10,6 +10,8 @@ import {
 import ItemList from './ItemList';
 import Tutorial from './Tutorial';
 import Setting from './Setting';
+import Home from './Home';
+import { ChevronLeftIcon } from '@react-three/uikit-lucide';
 
 export default function Menu() {
   const { currentMenu, setCurrentMenu } = useMenuStore();
@@ -32,52 +34,29 @@ export default function Menu() {
         value={currentMenu}
         width={'100%'}
         height={'80%'}
+        maxWidth={1000}
         backgroundColor={colors.background}
         backgroundOpacity={0.8}
         borderRadius={10}
       >
-        <TabsList
-          width={'100%'}
-          backgroundOpacity={0.5}
-          borderRadius={10}
-          display={'flex'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          gap={10}
-        >
+        <TabsList width={'100%'} borderRadius={10} gap={10}>
           <TabsTrigger
-            value={MenuType.TUTORIAL}
-            onClick={() => handleChangeMenu(MenuType.TUTORIAL)}
+            value={MenuType.HOME}
+            onClick={() => handleChangeMenu(MenuType.HOME)}
+            width={'100%'}
+            display={'flex'}
+            alignItems={'flex-start'}
+            justifyContent={'flex-start'}
           >
+            <ChevronLeftIcon height={20} width={20} />
             <Text fontSize={20} fontWeight={600} color={colors.primary}>
-              Tutorial
-            </Text>
-          </TabsTrigger>
-          <TabsTrigger
-            value={MenuType.ITEM_LIST}
-            onClick={() => handleChangeMenu(MenuType.ITEM_LIST)}
-          >
-            <Text fontSize={20} fontWeight={600} color={colors.primary}>
-              Item List
-            </Text>
-          </TabsTrigger>
-          <TabsTrigger
-            value={MenuType.ITEM_DETAILS}
-            onClick={() => handleChangeMenu(MenuType.ITEM_DETAILS)}
-          >
-            <Text fontSize={20} fontWeight={600} color={colors.primary}>
-              Item Details
-            </Text>
-          </TabsTrigger>
-          <TabsTrigger
-            value={MenuType.SETTING}
-            onClick={() => handleChangeMenu(MenuType.SETTING)}
-          >
-            <Text fontSize={20} fontWeight={600} color={colors.primary}>
-              Setting
+              Home
             </Text>
           </TabsTrigger>
         </TabsList>
+        <TabsContent value={MenuType.HOME} padding={20}>
+          <Home />
+        </TabsContent>
         <TabsContent value={MenuType.TUTORIAL} padding={20}>
           <Tutorial />
         </TabsContent>
