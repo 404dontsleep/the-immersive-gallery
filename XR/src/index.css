@@ -1,10 +1,89 @@
-@import "tailwindcss";
+/* CSS Variables - Color System */
+:root {
+  /* Primary Colors */
+  --color-primary: #1890ff;
+  --color-primary-dark: #096dd9;
+  --color-primary-light: #40a9ff;
+  --color-primary-lighter: #69c0ff;
+  --color-primary-bg: #f0f7ff;
+
+  /* Purple Colors */
+  --color-purple-light: #667eea;
+  --color-purple-dark: #764ba2;
+
+  /* Background Colors */
+  --color-bg-white: #ffffff;
+  --color-bg-light: #f9fafb;
+  --color-bg-light-gray: #f0f0f0;
+  --color-bg-dark: #1a1a1a;
+  --color-bg-black: #000000;
+
+  /* Text Colors */
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #333333;
+  --color-text-tertiary: #666666;
+  --color-text-quaternary: #999999;
+  --color-text-white: #ffffff;
+
+  /* Border Colors */
+  --color-border-light: #f0f0f0;
+  --color-border-main: #e0e0e0;
+  --color-border-dark: #d9d9d9;
+
+  /* Status Colors */
+  --color-error: #ff4d4f;
+  --color-success: #52c41a;
+  --color-warning: #faad14;
+  --color-info: #1890ff;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-white: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+}
+
 * {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Button reset */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Link reset */
+a {
+  text-decoration: none;
+  color: inherit;
 }

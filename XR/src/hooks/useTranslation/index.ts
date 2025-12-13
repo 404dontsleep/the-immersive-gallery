@@ -1,12 +1,14 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 import defaultLanguage, {
   type Translation,
-} from "./languages/default.language";
-import vnLanguage from "./languages/vn.language";
+} from './languages/default.language';
+import englishLanguage from './languages/english.language';
+import vnLanguage from './languages/vn2.languages';
 
-const languageList = {
+export const languageList = {
   default: defaultLanguage,
-  vn: vnLanguage,
+  english: englishLanguage,
+  vn2: vnLanguage,
 } as const;
 
 type TranslationStore = {
@@ -15,15 +17,37 @@ type TranslationStore = {
   setLanguage: (language: keyof typeof languageList) => void;
 };
 
-export const useTranslation = create<TranslationStore>((set) => ({
-  translation: defaultLanguage,
-  language: "default",
-  setLanguage: (language: keyof typeof languageList) =>
-    set({
+import { persist } from 'zustand/middleware';
+
+export const useTranslation = create<TranslationStore>()(
+  persist(
+    (set) => ({
       translation: {
         ...defaultLanguage,
-        ...languageList[language],
+        ...languageList['default'],
       },
-      language,
+      language: 'default',
+      setLanguage: (language: keyof typeof languageList) =>
+        set({
+          translation: {
+            ...defaultLanguage,
+            ...languageList[language],
+          },
+          language,
+        }),
     }),
-}));
+    {
+      name: 'museum_translation_store',
+      // Only persist the language key
+      partialize: (state) => ({
+        language: state.language,
+      }),
+      onRehydrateStorage: () => (state) => {
+        if (state && state.language) {
+          // Khi được hydrate lại, cập nhật translation theo ngôn ngữ đã lưu
+          state.setLanguage(state.language);
+        }
+      },
+    },
+  ),
+);

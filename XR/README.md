@@ -1,69 +1,225 @@
-# React + TypeScript + Vite
+# 🏛️ XR - The Immersive Gallery (Bảo Tàng D)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Trải nghiệm bảo tàng 3D/XR tương tác với React Three Fiber và WebXR.
 
-Currently, two official plugins are available:
+## 🚀 Tính năng
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✨ Trải nghiệm XR/VR tương tác
+- 🖼️ Xem và khám phá hiện vật 3D
+- 📱 Responsive web interface
+- 🎨 UI hiện đại với Ant Design và Tailwind CSS
+- 🌐 Đa ngôn ngữ (Tiếng Việt)
+- 🎯 Physics simulation với Rapier
 
-## Expanding the ESLint configuration
+## 📦 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 18.2** - UI framework
+- **TypeScript** - Type safety
+- **React Three Fiber** - 3D rendering
+- **@react-three/xr** - WebXR support
+- **@react-three/drei** - 3D helpers
+- **@react-three/rapier** - Physics engine
+- **@react-three/uikit** - 3D UI components
+- **Ant Design** - UI components
+- **Tailwind CSS** - Styling
+- **Wouter** - Routing
+- **Zustand** - State management
+- **Vite** - Build tool
 
-```js
-export default tseslint.config([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+## 🏗️ Kiến trúc Dự án
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Dự án sử dụng **Feature-Based Architecture** để dễ dàng maintain và scale:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```
+src/
+├── app/              # Application entry point
+├── features/         # Feature modules (home, items, museum)
+├── shared/           # Shared code (components, hooks, types, etc.)
+├── routes/           # Application routing
+├── assets/           # Static assets
+└── styles/           # Global styles
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+📚 **Xem chi tiết**: [ARCHITECTURE.md](./ARCHITECTURE.md)
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+## 🛠️ Cài đặt
 
-export default tseslint.config([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+### Prerequisites
+
+- Node.js >= 18
+- Yarn hoặc npm
+
+### Clone và Install
+
+```bash
+# Clone repository
+git clone <repository-url>
+
+# Di chuyển vào thư mục XR
+cd the-immersive-gallery/XR
+
+# Install dependencies
+yarn install
+# hoặc
+npm install
 ```
+
+## 🚀 Chạy Dự án
+
+### Development
+
+```bash
+yarn dev
+# hoặc
+npm run dev
+```
+
+Mở trình duyệt tại: `https://localhost:5173` (HTTPS cho XR support)
+
+### Build
+
+```bash
+yarn build
+# hoặc
+npm run build
+```
+
+### Preview
+
+```bash
+yarn preview
+# hoặc
+npm run preview
+```
+
+## 📁 Cấu trúc Chính
+
+### Features
+
+#### 🏠 Home (`features/home/`)
+
+- Trang chủ với giới thiệu
+- Landing page
+
+#### 🖼️ Items (`features/items/`)
+
+- Quản lý và hiển thị hiện vật
+- 3D item viewer
+- Item list và search
+
+#### 🏛️ Museum (`features/museum/`)
+
+- Trải nghiệm 3D museum
+- XR/VR scene
+
+### Shared
+
+- **Components**: DefaultLayout, 3D components
+- **Hooks**: useSplitText, useTheme, useTranslation
+- **Providers**: Canvas, XR store
+- **Types**: Shared TypeScript types
+- **Constants**: Routes, app config
+- **Config**: Theme, colors
+
+## 🎯 Path Aliases
+
+```typescript
+@/*           → src/*
+@app/*        → src/app/*
+@features/*   → src/features/*
+@shared/*     → src/shared/*
+@routes/*     → src/routes/*
+```
+
+## 📝 Scripts
+
+```bash
+# Development
+yarn dev              # Start dev server
+
+# Build
+yarn build            # Build for production
+yarn preview          # Preview production build
+
+# Linting
+yarn lint             # Run ESLint
+```
+
+## 🔄 Migration từ Cấu trúc Cũ
+
+Nếu bạn đang có code cũ, xem hướng dẫn migration:
+
+📚 [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)
+
+## 🏗️ Thêm Feature Mới
+
+1. Tạo thư mục feature:
+
+```bash
+mkdir -p src/features/my-feature/{components,hooks,services,types}
+```
+
+2. Tạo components và logic
+
+3. Export qua `index.ts`:
+
+```typescript
+// src/features/my-feature/index.ts
+export * from './components';
+export * from './hooks';
+export * from './types';
+```
+
+4. Sử dụng:
+
+```typescript
+import { MyComponent } from '@/features/my-feature';
+```
+
+## 📚 Documentation
+
+- [ARCHITECTURE.md](./ARCHITECTURE.md) - Kiến trúc chi tiết
+- [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md) - Hướng dẫn migration
+
+## 🌐 Browser Support
+
+- ✅ Chrome/Edge (recommended)
+- ✅ Firefox
+- ✅ Safari
+- ⚠️ WebXR requires secure context (HTTPS)
+
+## 🎮 XR/VR Support
+
+Dự án hỗ trợ WebXR API:
+
+- Meta Quest
+- Oculus devices
+- Other WebXR-compatible devices
+
+## 🤝 Contributing
+
+1. Fork repository
+2. Tạo feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Tạo Pull Request
+
+## 📄 License
+
+[MIT License](../LICENSE)
+
+## 👥 Team
+
+- **Developer Team** - Initial work
+
+## 🙏 Acknowledgments
+
+- [React Three Fiber](https://docs.pmnd.rs/react-three-fiber)
+- [React Three Drei](https://github.com/pmndrs/drei)
+- [React Three XR](https://github.com/pmndrs/react-xr)
+- [Ant Design](https://ant.design/)
+- [Tailwind CSS](https://tailwindcss.com/)
+
+---
+
+Made with ❤️ by the team

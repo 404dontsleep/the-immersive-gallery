@@ -1,20 +1,40 @@
-import { PointerEvents, XR } from '@react-three/xr';
-import { OrbitHandles } from '@react-three/handle';
-import { Physics } from '@react-three/rapier';
-import { useXRStore } from './useXRStore';
+import type { ReactNode } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { XR, createXRStore } from '@react-three/xr';
 
-export default function XRProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <Physics debug={true} gravity={[0, -0.98, 0]}>
-      <XR store={useXRStore}>
+interface XRProviderProps {
+  children: ReactNode;
+}
+
+export function XRProvider({ children }: XRProviderProps) {
+  return <>{children}</>;
+}
+
+interface XRCanvasProps {
+  children: ReactNode;
+  xrEnabled?: boolean;
+}
+
+const xrStore = createXRStore();
+
+export function XRCanvas({ children, xrEnabled = false }: XRCanvasProps) {
+  if (!xrEnabled) {
+    return (
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 75 }}
+        style={{ width: '100%', height: '100%' }}
+      >
         {children}
-        <PointerEvents />
-        <OrbitHandles />
-      </XR>
-    </Physics>
+      </Canvas>
+    );
+  }
+
+  return (
+    <Canvas
+      camera={{ position: [0, 0, 5], fov: 75 }}
+      style={{ width: '100%', height: '100%' }}
+    >
+      <XR store={xrStore}>{children}</XR>
+    </Canvas>
   );
 }

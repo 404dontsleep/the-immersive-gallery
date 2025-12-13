@@ -1,5 +1,15 @@
-import IndexRoute from "./routes/index.route";
+import { BrowserRouter } from 'react-router-dom';
+import { AppRoutes } from './routes';
+import { XRProvider } from './providers/XRProvider';
 
-export default function App() {
-  return <IndexRoute />;
+function App() {
+  return (
+    <BrowserRouter>
+      <XRProvider>
+        <AppRoutes />
+      </XRProvider>
+    </BrowserRouter>
+  );
 }
+
+export default App;

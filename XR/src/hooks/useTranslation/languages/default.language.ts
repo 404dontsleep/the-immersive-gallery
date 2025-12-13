@@ -2,23 +2,51 @@ export function defineTranslation(translation: Translation): Translation {
   return translation;
 }
 
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
 export function defineExtendTranslation(
-  translation: Partial<Translation>,
-): Partial<Translation> {
+  translation: DeepPartial<Translation>,
+): DeepPartial<Translation> {
   return {
     ...translation,
   };
 }
 
 export type Translation = {
-  welcome: string;
-  next: string;
-  lorem: string;
+  tutorial: {
+    title: string;
+  };
+  setting: {
+    language: {
+      [key: string]: string;
+    };
+    mode: {
+      title: string;
+      enter_vr: string;
+      enter_xr: string;
+      exit: string;
+    };
+  };
 };
 
 export default defineTranslation({
-  welcome: "Welcome",
-  next: "Next",
-  lorem:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+  tutorial: {
+    title: 'Chào mừng bạn đến với bảo tàng ảo Việt Nam',
+  },
+  setting: {
+    language: {
+      title: 'Ngôn ngữ',
+      default: 'Tiếng Việt',
+      english: 'Tiếng Anh',
+      vn2: 'Tiếng Việt 2',
+    },
+    mode: {
+      title: 'Chế độ',
+      enter_vr: 'Chế độ VR',
+      enter_xr: 'Chế độ XR',
+      exit: 'Thoát',
+    },
+  },
 });

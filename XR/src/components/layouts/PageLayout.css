@@ -1,0 +1,16 @@
+.page-layout {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.page-content {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.page-content.with-header {
+  padding-top: 70px;
+  height: calc(100% - 70px);
+}
