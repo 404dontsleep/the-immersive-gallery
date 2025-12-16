@@ -343,6 +343,8 @@ export interface LanguageDtoFindOptionsWhereDto {
   updatedAt?: DateWhereDto;
   deletedAt?: DateWhereDto;
   isLocked?: BooleanWhereDto;
+  code?: StringWhereDto;
+  country?: StringWhereDto;
   value?: StringWhereDto;
 }
 
@@ -353,10 +355,13 @@ export interface Language {
   /** @nullable */
   deletedAt: string | null;
   isLocked: boolean;
+  code: string;
+  country: string;
   value: string;
 }
 
 export interface LanguageDto {
+  id?: number;
   code: string;
   country: string;
   value: string;
@@ -390,6 +395,7 @@ export interface LanguageCode {
 }
 
 export interface LanguageCodeDto {
+  id?: number;
   code: string;
   description: string;
 }
@@ -422,6 +428,7 @@ export interface LanguageCountry {
 }
 
 export interface LanguageCountryDto {
+  id?: number;
   country: string;
   description: string;
 }

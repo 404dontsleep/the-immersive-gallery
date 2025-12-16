@@ -3,6 +3,7 @@ import SysPermission from '@/components/Sys/Permission';
 import { EnumPermission } from '@api';
 import BaseMenuItem from '@/components/Base/BaseMenuItem';
 import { Settings, ShieldCheckIcon, UserIcon } from 'lucide-react';
+import LanguageSider from './language/language.sider';
 export default function AdminSider() {
   return (
     <AutoSider>
@@ -27,6 +28,7 @@ export default function AdminSider() {
           icon={<Settings />}
         />
       </SysPermission>
+      <LanguageSider />
     </AutoSider>
   );
 }

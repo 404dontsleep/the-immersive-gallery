@@ -5,6 +5,7 @@ import permissionRouter from './permission/permission.router';
 import { Outlet } from 'react-router-dom';
 import userRouter from './user/user.router';
 import configRouter from './config/config.router';
+import languageRouter from './language/language.router';
 // import itemTypeRouter from './item-type/item-type.router';
 // import transactionRouter from './transaction/transaction.router';
 // import bankRouter from './bank/bank.router';
@@ -24,6 +25,7 @@ const adminRouter = defineRouter({
         ...permissionRouter.routes,
         ...userRouter.routes,
         ...configRouter.routes,
+        ...languageRouter.routes,
         // ...itemTypeRouter.routes,
         // ...transactionRouter.routes,
         // ...bankRouter.routes,
