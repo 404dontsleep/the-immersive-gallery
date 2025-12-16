@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { PermissionModule } from './permission/permission.module';
 import { SysConfigModule } from './sys-config/sys-config.module';
 import { ItemTypeModule } from './inventory/item-type/item-type.module';
+import { MuseumModule } from './museum/museum.module';
 
 import { ExportPermissionModule } from './permission/export-permission.module';
 
@@ -21,6 +22,7 @@ import { ExportPermissionModule } from './permission/export-permission.module';
     UserModule,
     SysConfigModule.forRoot(),
     ItemTypeModule,
+    MuseumModule,
     ExportPermissionModule,
   ],
   controllers: [],

@@ -331,6 +331,101 @@ export interface ItemTypeDtoFindOptionsWhereDto {
   symbol?: StringWhereDto;
 }
 
+export interface LanguageDtoFindManyOptions {
+  skip?: number;
+  take?: number;
+  withDeleted?: boolean;
+}
+
+export interface LanguageDtoFindOptionsWhereDto {
+  id?: NumberWhereDto;
+  createdAt?: DateWhereDto;
+  updatedAt?: DateWhereDto;
+  deletedAt?: DateWhereDto;
+  isLocked?: BooleanWhereDto;
+  value?: StringWhereDto;
+}
+
+export interface Language {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  /** @nullable */
+  deletedAt: string | null;
+  isLocked: boolean;
+  value: string;
+}
+
+export interface LanguageDto {
+  code: string;
+  country: string;
+  value: string;
+}
+
+export interface LanguageCodeDtoFindManyOptions {
+  skip?: number;
+  take?: number;
+  withDeleted?: boolean;
+}
+
+export interface LanguageCodeDtoFindOptionsWhereDto {
+  id?: NumberWhereDto;
+  createdAt?: DateWhereDto;
+  updatedAt?: DateWhereDto;
+  deletedAt?: DateWhereDto;
+  isLocked?: BooleanWhereDto;
+  code?: StringWhereDto;
+  description?: StringWhereDto;
+}
+
+export interface LanguageCode {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  /** @nullable */
+  deletedAt: string | null;
+  isLocked: boolean;
+  code: string;
+  description: string;
+}
+
+export interface LanguageCodeDto {
+  code: string;
+  description: string;
+}
+
+export interface LanguageCountryDtoFindManyOptions {
+  skip?: number;
+  take?: number;
+  withDeleted?: boolean;
+}
+
+export interface LanguageCountryDtoFindOptionsWhereDto {
+  id?: NumberWhereDto;
+  createdAt?: DateWhereDto;
+  updatedAt?: DateWhereDto;
+  deletedAt?: DateWhereDto;
+  isLocked?: BooleanWhereDto;
+  country?: StringWhereDto;
+  description?: StringWhereDto;
+}
+
+export interface LanguageCountry {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  /** @nullable */
+  deletedAt: string | null;
+  isLocked: boolean;
+  country: string;
+  description: string;
+}
+
+export interface LanguageCountryDto {
+  country: string;
+  description: string;
+}
+
 export type EnumPermission =
   (typeof EnumPermission)[keyof typeof EnumPermission];
 
@@ -362,6 +457,21 @@ export const EnumPermission = {
   ItemTypeControllerUpdate: 'ItemTypeController.Update',
   ItemTypeControllerDelete: 'ItemTypeController.Delete',
   ItemTypeController: 'ItemTypeController',
+  LanguageControllerView: 'LanguageController.View',
+  LanguageControllerCreate: 'LanguageController.Create',
+  LanguageControllerUpdate: 'LanguageController.Update',
+  LanguageControllerDelete: 'LanguageController.Delete',
+  LanguageController: 'LanguageController',
+  LanguageCodeControllerView: 'LanguageCodeController.View',
+  LanguageCodeControllerCreate: 'LanguageCodeController.Create',
+  LanguageCodeControllerUpdate: 'LanguageCodeController.Update',
+  LanguageCodeControllerDelete: 'LanguageCodeController.Delete',
+  LanguageCodeController: 'LanguageCodeController',
+  LanguageCountryControllerView: 'LanguageCountryController.View',
+  LanguageCountryControllerCreate: 'LanguageCountryController.Create',
+  LanguageCountryControllerUpdate: 'LanguageCountryController.Update',
+  LanguageCountryControllerDelete: 'LanguageCountryController.Delete',
+  LanguageCountryController: 'LanguageCountryController',
 } as const;
 
 export interface RegistedPermissionDto {
@@ -427,6 +537,56 @@ export type ItemTypeControllerFindAllParams = {
   take?: number;
   withDeleted?: boolean;
   where?: ItemTypeDtoFindOptionsWhereDto | ItemTypeDtoFindOptionsWhereDto[];
+};
+
+export type LanguageControllerCountParams = {
+  skip?: number;
+  take?: number;
+  withDeleted?: boolean;
+  where?: LanguageDtoFindOptionsWhereDto | LanguageDtoFindOptionsWhereDto[];
+};
+
+export type LanguageControllerFindAllParams = {
+  skip?: number;
+  take?: number;
+  withDeleted?: boolean;
+  where?: LanguageDtoFindOptionsWhereDto | LanguageDtoFindOptionsWhereDto[];
+};
+
+export type LanguageCodeControllerCountParams = {
+  skip?: number;
+  take?: number;
+  withDeleted?: boolean;
+  where?:
+    | LanguageCodeDtoFindOptionsWhereDto
+    | LanguageCodeDtoFindOptionsWhereDto[];
+};
+
+export type LanguageCodeControllerFindAllParams = {
+  skip?: number;
+  take?: number;
+  withDeleted?: boolean;
+  where?:
+    | LanguageCodeDtoFindOptionsWhereDto
+    | LanguageCodeDtoFindOptionsWhereDto[];
+};
+
+export type LanguageCountryControllerCountParams = {
+  skip?: number;
+  take?: number;
+  withDeleted?: boolean;
+  where?:
+    | LanguageCountryDtoFindOptionsWhereDto
+    | LanguageCountryDtoFindOptionsWhereDto[];
+};
+
+export type LanguageCountryControllerFindAllParams = {
+  skip?: number;
+  take?: number;
+  withDeleted?: boolean;
+  where?:
+    | LanguageCountryDtoFindOptionsWhereDto
+    | LanguageCountryDtoFindOptionsWhereDto[];
 };
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
@@ -2196,6 +2356,954 @@ export const useItemTypeControllerDelete = <TError = unknown>(
   const swrKey =
     swrOptions?.swrKey ?? getItemTypeControllerDeleteMutationKey(id);
   const swrFn = getItemTypeControllerDeleteMutationFetcher(id, requestOptions);
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageControllerCount = (
+  params?: LanguageControllerCountParams,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<number>(
+    { url: `/api/languages/count`, method: 'GET', params },
+    options,
+  );
+};
+
+export const getLanguageControllerCountKey = (
+  params?: LanguageControllerCountParams,
+) => [`/api/languages/count`, ...(params ? [params] : [])] as const;
+
+export type LanguageControllerCountQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languageControllerCount>>
+>;
+export type LanguageControllerCountQueryError = unknown;
+
+export const useLanguageControllerCount = <TError = unknown>(
+  params?: LanguageControllerCountParams,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof languageControllerCount>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguageControllerCountKey(params) : null));
+  const swrFn = () => languageControllerCount(params, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageControllerFindAll = (
+  params?: LanguageControllerFindAllParams,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<Language[]>(
+    { url: `/api/languages`, method: 'GET', params },
+    options,
+  );
+};
+
+export const getLanguageControllerFindAllKey = (
+  params?: LanguageControllerFindAllParams,
+) => [`/api/languages`, ...(params ? [params] : [])] as const;
+
+export type LanguageControllerFindAllQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languageControllerFindAll>>
+>;
+export type LanguageControllerFindAllQueryError = unknown;
+
+export const useLanguageControllerFindAll = <TError = unknown>(
+  params?: LanguageControllerFindAllParams,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof languageControllerFindAll>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguageControllerFindAllKey(params) : null));
+  const swrFn = () => languageControllerFindAll(params, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageControllerCreate = (
+  languageDto: LanguageDto,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    {
+      url: `/api/languages`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: languageDto,
+    },
+    options,
+  );
+};
+
+export const getLanguageControllerCreateMutationFetcher = (
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, { arg }: { arg: LanguageDto }): Promise<null> => {
+    return languageControllerCreate(arg, options);
+  };
+};
+export const getLanguageControllerCreateMutationKey = () =>
+  [`/api/languages`] as const;
+
+export type LanguageControllerCreateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof languageControllerCreate>>
+>;
+export type LanguageControllerCreateMutationError = unknown;
+
+export const useLanguageControllerCreate = <TError = unknown>(options?: {
+  swr?: SWRMutationConfiguration<
+    Awaited<ReturnType<typeof languageControllerCreate>>,
+    TError,
+    Key,
+    LanguageDto,
+    Awaited<ReturnType<typeof languageControllerCreate>>
+  > & { swrKey?: string };
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey = swrOptions?.swrKey ?? getLanguageControllerCreateMutationKey();
+  const swrFn = getLanguageControllerCreateMutationFetcher(requestOptions);
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageControllerFindById = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<Language>(
+    { url: `/api/languages/${id}`, method: 'GET' },
+    options,
+  );
+};
+
+export const getLanguageControllerFindByIdKey = (id: number) =>
+  [`/api/languages/${id}`] as const;
+
+export type LanguageControllerFindByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languageControllerFindById>>
+>;
+export type LanguageControllerFindByIdQueryError = unknown;
+
+export const useLanguageControllerFindById = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof languageControllerFindById>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false && !!id;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguageControllerFindByIdKey(id) : null));
+  const swrFn = () => languageControllerFindById(id, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageControllerUpdate = (
+  id: number,
+  languageDto: LanguageDto,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    {
+      url: `/api/languages/${id}`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: languageDto,
+    },
+    options,
+  );
+};
+
+export const getLanguageControllerUpdateMutationFetcher = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, { arg }: { arg: LanguageDto }): Promise<null> => {
+    return languageControllerUpdate(id, arg, options);
+  };
+};
+export const getLanguageControllerUpdateMutationKey = (id: number) =>
+  [`/api/languages/${id}`] as const;
+
+export type LanguageControllerUpdateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof languageControllerUpdate>>
+>;
+export type LanguageControllerUpdateMutationError = unknown;
+
+export const useLanguageControllerUpdate = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof languageControllerUpdate>>,
+      TError,
+      Key,
+      LanguageDto,
+      Awaited<ReturnType<typeof languageControllerUpdate>>
+    > & { swrKey?: string };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getLanguageControllerUpdateMutationKey(id);
+  const swrFn = getLanguageControllerUpdateMutationFetcher(id, requestOptions);
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageControllerDelete = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    { url: `/api/languages/${id}`, method: 'DELETE' },
+    options,
+  );
+};
+
+export const getLanguageControllerDeleteMutationFetcher = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, __: { arg: Arguments }): Promise<null> => {
+    return languageControllerDelete(id, options);
+  };
+};
+export const getLanguageControllerDeleteMutationKey = (id: number) =>
+  [`/api/languages/${id}`] as const;
+
+export type LanguageControllerDeleteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof languageControllerDelete>>
+>;
+export type LanguageControllerDeleteMutationError = unknown;
+
+export const useLanguageControllerDelete = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof languageControllerDelete>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof languageControllerDelete>>
+    > & { swrKey?: string };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getLanguageControllerDeleteMutationKey(id);
+  const swrFn = getLanguageControllerDeleteMutationFetcher(id, requestOptions);
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCodeControllerCount = (
+  params?: LanguageCodeControllerCountParams,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<number>(
+    { url: `/api/language-codes/count`, method: 'GET', params },
+    options,
+  );
+};
+
+export const getLanguageCodeControllerCountKey = (
+  params?: LanguageCodeControllerCountParams,
+) => [`/api/language-codes/count`, ...(params ? [params] : [])] as const;
+
+export type LanguageCodeControllerCountQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languageCodeControllerCount>>
+>;
+export type LanguageCodeControllerCountQueryError = unknown;
+
+export const useLanguageCodeControllerCount = <TError = unknown>(
+  params?: LanguageCodeControllerCountParams,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof languageCodeControllerCount>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguageCodeControllerCountKey(params) : null));
+  const swrFn = () => languageCodeControllerCount(params, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCodeControllerFindAll = (
+  params?: LanguageCodeControllerFindAllParams,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<LanguageCode[]>(
+    { url: `/api/language-codes`, method: 'GET', params },
+    options,
+  );
+};
+
+export const getLanguageCodeControllerFindAllKey = (
+  params?: LanguageCodeControllerFindAllParams,
+) => [`/api/language-codes`, ...(params ? [params] : [])] as const;
+
+export type LanguageCodeControllerFindAllQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languageCodeControllerFindAll>>
+>;
+export type LanguageCodeControllerFindAllQueryError = unknown;
+
+export const useLanguageCodeControllerFindAll = <TError = unknown>(
+  params?: LanguageCodeControllerFindAllParams,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof languageCodeControllerFindAll>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguageCodeControllerFindAllKey(params) : null));
+  const swrFn = () => languageCodeControllerFindAll(params, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCodeControllerCreate = (
+  languageCodeDto: LanguageCodeDto,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    {
+      url: `/api/language-codes`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: languageCodeDto,
+    },
+    options,
+  );
+};
+
+export const getLanguageCodeControllerCreateMutationFetcher = (
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, { arg }: { arg: LanguageCodeDto }): Promise<null> => {
+    return languageCodeControllerCreate(arg, options);
+  };
+};
+export const getLanguageCodeControllerCreateMutationKey = () =>
+  [`/api/language-codes`] as const;
+
+export type LanguageCodeControllerCreateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof languageCodeControllerCreate>>
+>;
+export type LanguageCodeControllerCreateMutationError = unknown;
+
+export const useLanguageCodeControllerCreate = <TError = unknown>(options?: {
+  swr?: SWRMutationConfiguration<
+    Awaited<ReturnType<typeof languageCodeControllerCreate>>,
+    TError,
+    Key,
+    LanguageCodeDto,
+    Awaited<ReturnType<typeof languageCodeControllerCreate>>
+  > & { swrKey?: string };
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getLanguageCodeControllerCreateMutationKey();
+  const swrFn = getLanguageCodeControllerCreateMutationFetcher(requestOptions);
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCodeControllerFindById = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<LanguageCode>(
+    { url: `/api/language-codes/${id}`, method: 'GET' },
+    options,
+  );
+};
+
+export const getLanguageCodeControllerFindByIdKey = (id: number) =>
+  [`/api/language-codes/${id}`] as const;
+
+export type LanguageCodeControllerFindByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languageCodeControllerFindById>>
+>;
+export type LanguageCodeControllerFindByIdQueryError = unknown;
+
+export const useLanguageCodeControllerFindById = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof languageCodeControllerFindById>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false && !!id;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguageCodeControllerFindByIdKey(id) : null));
+  const swrFn = () => languageCodeControllerFindById(id, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCodeControllerUpdate = (
+  id: number,
+  languageCodeDto: LanguageCodeDto,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    {
+      url: `/api/language-codes/${id}`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: languageCodeDto,
+    },
+    options,
+  );
+};
+
+export const getLanguageCodeControllerUpdateMutationFetcher = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, { arg }: { arg: LanguageCodeDto }): Promise<null> => {
+    return languageCodeControllerUpdate(id, arg, options);
+  };
+};
+export const getLanguageCodeControllerUpdateMutationKey = (id: number) =>
+  [`/api/language-codes/${id}`] as const;
+
+export type LanguageCodeControllerUpdateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof languageCodeControllerUpdate>>
+>;
+export type LanguageCodeControllerUpdateMutationError = unknown;
+
+export const useLanguageCodeControllerUpdate = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof languageCodeControllerUpdate>>,
+      TError,
+      Key,
+      LanguageCodeDto,
+      Awaited<ReturnType<typeof languageCodeControllerUpdate>>
+    > & { swrKey?: string };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getLanguageCodeControllerUpdateMutationKey(id);
+  const swrFn = getLanguageCodeControllerUpdateMutationFetcher(
+    id,
+    requestOptions,
+  );
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCodeControllerDelete = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    { url: `/api/language-codes/${id}`, method: 'DELETE' },
+    options,
+  );
+};
+
+export const getLanguageCodeControllerDeleteMutationFetcher = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, __: { arg: Arguments }): Promise<null> => {
+    return languageCodeControllerDelete(id, options);
+  };
+};
+export const getLanguageCodeControllerDeleteMutationKey = (id: number) =>
+  [`/api/language-codes/${id}`] as const;
+
+export type LanguageCodeControllerDeleteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof languageCodeControllerDelete>>
+>;
+export type LanguageCodeControllerDeleteMutationError = unknown;
+
+export const useLanguageCodeControllerDelete = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof languageCodeControllerDelete>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof languageCodeControllerDelete>>
+    > & { swrKey?: string };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getLanguageCodeControllerDeleteMutationKey(id);
+  const swrFn = getLanguageCodeControllerDeleteMutationFetcher(
+    id,
+    requestOptions,
+  );
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCountryControllerCount = (
+  params?: LanguageCountryControllerCountParams,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<number>(
+    { url: `/api/language-countries/count`, method: 'GET', params },
+    options,
+  );
+};
+
+export const getLanguageCountryControllerCountKey = (
+  params?: LanguageCountryControllerCountParams,
+) => [`/api/language-countries/count`, ...(params ? [params] : [])] as const;
+
+export type LanguageCountryControllerCountQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languageCountryControllerCount>>
+>;
+export type LanguageCountryControllerCountQueryError = unknown;
+
+export const useLanguageCountryControllerCount = <TError = unknown>(
+  params?: LanguageCountryControllerCountParams,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof languageCountryControllerCount>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguageCountryControllerCountKey(params) : null));
+  const swrFn = () => languageCountryControllerCount(params, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCountryControllerFindAll = (
+  params?: LanguageCountryControllerFindAllParams,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<LanguageCountry[]>(
+    { url: `/api/language-countries`, method: 'GET', params },
+    options,
+  );
+};
+
+export const getLanguageCountryControllerFindAllKey = (
+  params?: LanguageCountryControllerFindAllParams,
+) => [`/api/language-countries`, ...(params ? [params] : [])] as const;
+
+export type LanguageCountryControllerFindAllQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languageCountryControllerFindAll>>
+>;
+export type LanguageCountryControllerFindAllQueryError = unknown;
+
+export const useLanguageCountryControllerFindAll = <TError = unknown>(
+  params?: LanguageCountryControllerFindAllParams,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof languageCountryControllerFindAll>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguageCountryControllerFindAllKey(params) : null));
+  const swrFn = () => languageCountryControllerFindAll(params, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCountryControllerCreate = (
+  languageCountryDto: LanguageCountryDto,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    {
+      url: `/api/language-countries`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: languageCountryDto,
+    },
+    options,
+  );
+};
+
+export const getLanguageCountryControllerCreateMutationFetcher = (
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, { arg }: { arg: LanguageCountryDto }): Promise<null> => {
+    return languageCountryControllerCreate(arg, options);
+  };
+};
+export const getLanguageCountryControllerCreateMutationKey = () =>
+  [`/api/language-countries`] as const;
+
+export type LanguageCountryControllerCreateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof languageCountryControllerCreate>>
+>;
+export type LanguageCountryControllerCreateMutationError = unknown;
+
+export const useLanguageCountryControllerCreate = <TError = unknown>(options?: {
+  swr?: SWRMutationConfiguration<
+    Awaited<ReturnType<typeof languageCountryControllerCreate>>,
+    TError,
+    Key,
+    LanguageCountryDto,
+    Awaited<ReturnType<typeof languageCountryControllerCreate>>
+  > & { swrKey?: string };
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getLanguageCountryControllerCreateMutationKey();
+  const swrFn =
+    getLanguageCountryControllerCreateMutationFetcher(requestOptions);
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCountryControllerFindById = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<LanguageCountry>(
+    { url: `/api/language-countries/${id}`, method: 'GET' },
+    options,
+  );
+};
+
+export const getLanguageCountryControllerFindByIdKey = (id: number) =>
+  [`/api/language-countries/${id}`] as const;
+
+export type LanguageCountryControllerFindByIdQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languageCountryControllerFindById>>
+>;
+export type LanguageCountryControllerFindByIdQueryError = unknown;
+
+export const useLanguageCountryControllerFindById = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof languageCountryControllerFindById>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false && !!id;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguageCountryControllerFindByIdKey(id) : null));
+  const swrFn = () => languageCountryControllerFindById(id, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCountryControllerUpdate = (
+  id: number,
+  languageCountryDto: LanguageCountryDto,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    {
+      url: `/api/language-countries/${id}`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: languageCountryDto,
+    },
+    options,
+  );
+};
+
+export const getLanguageCountryControllerUpdateMutationFetcher = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, { arg }: { arg: LanguageCountryDto }): Promise<null> => {
+    return languageCountryControllerUpdate(id, arg, options);
+  };
+};
+export const getLanguageCountryControllerUpdateMutationKey = (id: number) =>
+  [`/api/language-countries/${id}`] as const;
+
+export type LanguageCountryControllerUpdateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof languageCountryControllerUpdate>>
+>;
+export type LanguageCountryControllerUpdateMutationError = unknown;
+
+export const useLanguageCountryControllerUpdate = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof languageCountryControllerUpdate>>,
+      TError,
+      Key,
+      LanguageCountryDto,
+      Awaited<ReturnType<typeof languageCountryControllerUpdate>>
+    > & { swrKey?: string };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getLanguageCountryControllerUpdateMutationKey(id);
+  const swrFn = getLanguageCountryControllerUpdateMutationFetcher(
+    id,
+    requestOptions,
+  );
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languageCountryControllerDelete = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    { url: `/api/language-countries/${id}`, method: 'DELETE' },
+    options,
+  );
+};
+
+export const getLanguageCountryControllerDeleteMutationFetcher = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, __: { arg: Arguments }): Promise<null> => {
+    return languageCountryControllerDelete(id, options);
+  };
+};
+export const getLanguageCountryControllerDeleteMutationKey = (id: number) =>
+  [`/api/language-countries/${id}`] as const;
+
+export type LanguageCountryControllerDeleteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof languageCountryControllerDelete>>
+>;
+export type LanguageCountryControllerDeleteMutationError = unknown;
+
+export const useLanguageCountryControllerDelete = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof languageCountryControllerDelete>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof languageCountryControllerDelete>>
+    > & { swrKey?: string };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getLanguageCountryControllerDeleteMutationKey(id);
+  const swrFn = getLanguageCountryControllerDeleteMutationFetcher(
+    id,
+    requestOptions,
+  );
 
   const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
