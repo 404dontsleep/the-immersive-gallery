@@ -5,7 +5,6 @@ import { BaseEntity } from '../base/base-entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Permission } from '@/permission/permission.entity';
 import { Inventory } from '@/inventory/inventory.entity';
-import { Transaction } from '@/transaction/entities/transaction.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -37,10 +36,4 @@ export class User extends BaseEntity {
     cascade: ['insert', 'update', 'remove'],
   })
   inventories: Inventory[];
-
-  @ApiProperty({ type: [Transaction] })
-  @OneToMany(() => Transaction, transaction => transaction.fromUser, {
-    cascade: ['insert', 'update'],
-  })
-  transactions: Transaction[];
 }

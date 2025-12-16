@@ -8,6 +8,7 @@ import { useMemo } from 'react';
 import MuseumRoom from './Components/MuseumRoom';
 import WrapperMenu from './Components/Menu/Wrapper';
 import { setPreferredColorScheme } from '@react-three/uikit';
+import SelectedItem from './Components/SelectedItem';
 
 setPreferredColorScheme('light');
 
@@ -36,12 +37,7 @@ export function MuseumVRPage() {
             />
 
             <MuseumRoom />
-
-            {/* <group position={[0, 0, 0]}>
-            <DongSonDrum position={[0, 0.5, 0]} />
-          </group> */}
-
-            {/* <ItemList /> */}
+            <SelectedItem />
             <WrapperMenu />
 
             <CameraControls enabled={isOrbitControlsEnabled} />

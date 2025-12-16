@@ -1,4 +1,4 @@
-import { useMenuStore, MenuType } from '@/stores/menu.store';
+import { useMenuStore, MenuType, MenuMode } from '@/stores/menu.store';
 import { Container, Text } from '@react-three/uikit';
 import { colors } from '@react-three/uikit-default';
 import {
@@ -12,13 +12,17 @@ import Tutorial from './Tutorial';
 import Setting from './Setting';
 import Home from './Home';
 import { ChevronLeftIcon } from '@react-three/uikit-lucide';
+import ItemDetails from './ItemDetails';
+import { useLayout, Orientation } from '@/hooks/useTranslation/useLayout';
 
 export default function Menu() {
-  const { currentMenu, setCurrentMenu } = useMenuStore();
-
+  const { currentMenu, setCurrentMenu, mode } = useMenuStore();
+  const orientation = useLayout();
   const handleChangeMenu = (menu: MenuType) => {
     setCurrentMenu(menu);
   };
+
+  if (!currentMenu && mode === MenuMode.WEB) return null;
 
   return (
     <Container
@@ -31,9 +35,9 @@ export default function Menu() {
       alignItems={'center'}
     >
       <Tabs
-        value={currentMenu}
+        value={currentMenu ?? ''}
         width={'100%'}
-        height={'80%'}
+        height={orientation === Orientation.LANDSCAPE ? '80%' : '100%'}
         maxWidth={1000}
         backgroundColor={colors.background}
         backgroundOpacity={0.8}
@@ -53,6 +57,18 @@ export default function Menu() {
               Home
             </Text>
           </TabsTrigger>
+          <TabsTrigger
+            value={MenuType.TUTORIAL}
+            onClick={() => setCurrentMenu(null)}
+            width={'100%'}
+            display={mode === MenuMode.WEB ? 'flex' : 'none'}
+            alignItems={'flex-start'}
+            justifyContent={'flex-start'}
+          >
+            <Text fontSize={20} fontWeight={600} color={colors.primary}>
+              Close Menu
+            </Text>
+          </TabsTrigger>
         </TabsList>
         <TabsContent value={MenuType.HOME} padding={20}>
           <Home />
@@ -63,7 +79,9 @@ export default function Menu() {
         <TabsContent value={MenuType.ITEM_LIST} padding={20}>
           <ItemList />
         </TabsContent>
-        <TabsContent value={MenuType.ITEM_DETAILS} padding={20}></TabsContent>
+        <TabsContent value={MenuType.ITEM_DETAILS} padding={20}>
+          <ItemDetails />
+        </TabsContent>
         <TabsContent value={MenuType.SETTING} padding={20}>
           <Setting />
         </TabsContent>

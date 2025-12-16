@@ -28,7 +28,12 @@ const mockItems: Item[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     categoryId: '1',
     thumbnailUrl: 'https://placehold.co/200x200',
-    imageUrls: ['https://placehold.co/600x400', 'https://placehold.co/600x400'],
+    imageUrls: [
+      'https://placehold.co/600x400',
+      'https://placehold.co/600x400',
+      'https://placehold.co/600x400',
+      'https://placehold.co/600x400',
+    ],
   },
   {
     id: '2',

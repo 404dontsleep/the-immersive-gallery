@@ -1,8 +1,6 @@
 import { itemsService } from '@/services/items.service';
-import type { Item } from '@/types';
-import { Container, Image, Text } from '@react-three/uikit';
+import { Container, Text } from '@react-three/uikit';
 import {
-  Button,
   Tabs,
   TabsContent,
   TabsList,
@@ -10,6 +8,7 @@ import {
 } from '@react-three/uikit-default';
 import { useCallback } from 'react';
 import useSWR from 'swr';
+import ItemCard from './ItemCard';
 
 export default function ItemList() {
   const { data: items } = useSWR('items', () => itemsService.getItems());
@@ -93,61 +92,6 @@ export default function ItemList() {
           </TabsContent>
         ))}
       </Tabs>
-    </Container>
-  );
-}
-
-function ItemCard({ item }: { item: Item }) {
-  return (
-    <Container
-      flexGrow={1}
-      height={200}
-      backgroundColor={'#ffffff'}
-      borderRadius={10}
-      overflow={'hidden'}
-      display={'flex'}
-      alignItems={'flex-start'}
-      gap={10}
-    >
-      <Image
-        minWidth={200}
-        minHeight={200}
-        width={200}
-        height={200}
-        src={item.thumbnailUrl}
-        borderLeftRadius={10}
-      />
-      <Container
-        display={'flex'}
-        flexDirection={'column'}
-        gap={10}
-        height={'100%'}
-        width={'100%'}
-        justifyContent={'space-between'}
-      >
-        <Container
-          display={'flex'}
-          flexDirection={'column'}
-          gap={10}
-          padding={10}
-        >
-          <Text fontSize={24} fontWeight={600}>
-            {item.name}
-          </Text>
-          <Text fontSize={16} fontWeight={400}>
-            {item.description}
-          </Text>
-        </Container>
-        <Container
-          display={'flex'}
-          alignItems={'center'}
-          justifyContent={'flex-end'}
-        >
-          <Button variant={'link'}>
-            <Text>View details</Text>
-          </Button>
-        </Container>
-      </Container>
     </Container>
   );
 }

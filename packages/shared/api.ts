@@ -12,7 +12,7 @@ import useSWRMutation from 'swr/mutation';
 import type { SWRMutationConfiguration } from 'swr/mutation';
 
 import { customInstance } from './mutator';
-export interface SysCronDtoFindManyOptions {
+export interface PermissionDtoFindManyOptions {
   skip?: number;
   take?: number;
   withDeleted?: boolean;
@@ -78,50 +78,6 @@ export interface StringWhereDto {
   isNotNull?: boolean;
   /** Search for strings containing this substring */
   contains?: string;
-}
-
-export interface SysCronDtoFindOptionsWhereDto {
-  id?: NumberWhereDto;
-  createdAt?: DateWhereDto;
-  updatedAt?: DateWhereDto;
-  deletedAt?: DateWhereDto;
-  isLocked?: BooleanWhereDto;
-  name?: StringWhereDto;
-  cronExpression?: StringWhereDto;
-  enabled?: BooleanWhereDto;
-  lastRunAt?: DateWhereDto;
-}
-
-export interface SysCronDto {
-  name: string;
-  cronExpression: string;
-  enabled: boolean;
-}
-
-export interface SysCron {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  /** @nullable */
-  deletedAt: string | null;
-  isLocked: boolean;
-  name: string;
-  cronExpression: string;
-  enabled: boolean;
-  lastRunAt: string;
-}
-
-export interface InstanceDto {
-  fromUser: TransactionUserDto;
-  toUser: TransactionUserDto;
-  items: TransactionItemDto[];
-  status?: TransactionStatus;
-}
-
-export interface PermissionDtoFindManyOptions {
-  skip?: number;
-  take?: number;
-  withDeleted?: boolean;
 }
 
 export interface PermissionDtoFindOptionsWhereDto {
@@ -206,55 +162,6 @@ export interface UserDtoFindOptionsWhereDto {
   email?: StringWhereDto;
 }
 
-export interface ItemType {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  /** @nullable */
-  deletedAt: string | null;
-  isLocked: boolean;
-  name: string;
-  description: string;
-  symbol: string;
-}
-
-export interface TransactionItem {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  /** @nullable */
-  deletedAt: string | null;
-  isLocked: boolean;
-  itemType: ItemType;
-  quantity: number;
-  expirationDate: string;
-}
-
-export type TransactionStatus =
-  (typeof TransactionStatus)[keyof typeof TransactionStatus];
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const TransactionStatus = {
-  pending: 'pending',
-  success: 'success',
-  failed: 'failed',
-} as const;
-
-export interface Transaction {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  /** @nullable */
-  deletedAt: string | null;
-  isLocked: boolean;
-  uuid: string;
-  fromUser: User;
-  toUser: User;
-  items: TransactionItem[];
-  status: TransactionStatus;
-  isAccepted: boolean;
-}
-
 export interface User {
   id: number;
   createdAt: string;
@@ -265,7 +172,18 @@ export interface User {
   email: string;
   permissions: Permission[];
   inventories: Inventory[];
-  transactions: Transaction[];
+}
+
+export interface ItemType {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  /** @nullable */
+  deletedAt: string | null;
+  isLocked: boolean;
+  name: string;
+  description: string;
+  symbol: string;
 }
 
 export interface Inventory {
@@ -413,45 +331,6 @@ export interface ItemTypeDtoFindOptionsWhereDto {
   symbol?: StringWhereDto;
 }
 
-export interface TransactionDtoFindManyOptions {
-  skip?: number;
-  take?: number;
-  withDeleted?: boolean;
-}
-
-export interface TransactionDtoFindOptionsWhereDto {
-  id?: NumberWhereDto;
-  createdAt?: DateWhereDto;
-  updatedAt?: DateWhereDto;
-  deletedAt?: DateWhereDto;
-  isLocked?: BooleanWhereDto;
-  uuid?: StringWhereDto;
-  status?: StringWhereDto;
-  isAccepted?: BooleanWhereDto;
-}
-
-export interface TransactionUserDto {
-  id: number;
-}
-
-export interface TransactionItemTypeDto {
-  id: number;
-}
-
-export interface TransactionItemDto {
-  id: number;
-  itemType: TransactionItemTypeDto;
-  quantity: number;
-  expirationDate?: string;
-}
-
-export interface TransactionDto {
-  fromUser: TransactionUserDto;
-  toUser: TransactionUserDto;
-  items: TransactionItemDto[];
-  status?: TransactionStatus;
-}
-
 export type EnumPermission =
   (typeof EnumPermission)[keyof typeof EnumPermission];
 
@@ -483,31 +362,11 @@ export const EnumPermission = {
   ItemTypeControllerUpdate: 'ItemTypeController.Update',
   ItemTypeControllerDelete: 'ItemTypeController.Delete',
   ItemTypeController: 'ItemTypeController',
-  TransactionControllerView: 'TransactionController.View',
-  TransactionControllerCreate: 'TransactionController.Create',
-  TransactionController: 'TransactionController',
-  SysCronControllerView: 'SysCronController.View',
-  SysCronControllerUpdate: 'SysCronController.Update',
-  SysCronController: 'SysCronController',
 } as const;
 
 export interface RegistedPermissionDto {
   permission: EnumPermission;
 }
-
-export type SysCronControllerCountParams = {
-  skip?: number;
-  take?: number;
-  withDeleted?: boolean;
-  where?: SysCronDtoFindOptionsWhereDto | SysCronDtoFindOptionsWhereDto[];
-};
-
-export type SysCronControllerFindAllParams = {
-  skip?: number;
-  take?: number;
-  withDeleted?: boolean;
-  where?: SysCronDtoFindOptionsWhereDto | SysCronDtoFindOptionsWhereDto[];
-};
 
 export type PermissionControllerCountParams = {
   skip?: number;
@@ -570,225 +429,7 @@ export type ItemTypeControllerFindAllParams = {
   where?: ItemTypeDtoFindOptionsWhereDto | ItemTypeDtoFindOptionsWhereDto[];
 };
 
-export type TransactionControllerCountParams = {
-  skip?: number;
-  take?: number;
-  withDeleted?: boolean;
-  where?:
-    | TransactionDtoFindOptionsWhereDto
-    | TransactionDtoFindOptionsWhereDto[];
-};
-
-export type TransactionControllerFindAllParams = {
-  skip?: number;
-  take?: number;
-  withDeleted?: boolean;
-  where?:
-    | TransactionDtoFindOptionsWhereDto
-    | TransactionDtoFindOptionsWhereDto[];
-};
-
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
-
-export const sysCronControllerUpdateCron = (
-  sysCronDto: SysCronDto,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<null>(
-    {
-      url: `/api/sys-cron/update`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: sysCronDto,
-    },
-    options,
-  );
-};
-
-export const getSysCronControllerUpdateCronMutationFetcher = (
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return (_: Key, { arg }: { arg: SysCronDto }): Promise<null> => {
-    return sysCronControllerUpdateCron(arg, options);
-  };
-};
-export const getSysCronControllerUpdateCronMutationKey = () =>
-  [`/api/sys-cron/update`] as const;
-
-export type SysCronControllerUpdateCronMutationResult = NonNullable<
-  Awaited<ReturnType<typeof sysCronControllerUpdateCron>>
->;
-export type SysCronControllerUpdateCronMutationError = unknown;
-
-export const useSysCronControllerUpdateCron = <TError = unknown>(options?: {
-  swr?: SWRMutationConfiguration<
-    Awaited<ReturnType<typeof sysCronControllerUpdateCron>>,
-    TError,
-    Key,
-    SysCronDto,
-    Awaited<ReturnType<typeof sysCronControllerUpdateCron>>
-  > & { swrKey?: string };
-  request?: SecondParameter<typeof customInstance>;
-}) => {
-  const { swr: swrOptions, request: requestOptions } = options ?? {};
-
-  const swrKey =
-    swrOptions?.swrKey ?? getSysCronControllerUpdateCronMutationKey();
-  const swrFn = getSysCronControllerUpdateCronMutationFetcher(requestOptions);
-
-  const query = useSWRMutation(swrKey, swrFn, swrOptions);
-
-  return {
-    swrKey,
-    ...query,
-  };
-};
-
-export const sysCronControllerCount = (
-  params?: SysCronControllerCountParams,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<number>(
-    { url: `/api/sys-cron/count`, method: 'GET', params },
-    options,
-  );
-};
-
-export const getSysCronControllerCountKey = (
-  params?: SysCronControllerCountParams,
-) => [`/api/sys-cron/count`, ...(params ? [params] : [])] as const;
-
-export type SysCronControllerCountQueryResult = NonNullable<
-  Awaited<ReturnType<typeof sysCronControllerCount>>
->;
-export type SysCronControllerCountQueryError = unknown;
-
-export const useSysCronControllerCount = <TError = unknown>(
-  params?: SysCronControllerCountParams,
-  options?: {
-    swr?: SWRConfiguration<
-      Awaited<ReturnType<typeof sysCronControllerCount>>,
-      TError
-    > & { swrKey?: Key; enabled?: boolean };
-    request?: SecondParameter<typeof customInstance>;
-  },
-) => {
-  const { swr: swrOptions, request: requestOptions } = options ?? {};
-
-  const isEnabled = swrOptions?.enabled !== false;
-  const swrKey =
-    swrOptions?.swrKey ??
-    (() => (isEnabled ? getSysCronControllerCountKey(params) : null));
-  const swrFn = () => sysCronControllerCount(params, requestOptions);
-
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
-    swrKey,
-    swrFn,
-    swrOptions,
-  );
-
-  return {
-    swrKey,
-    ...query,
-  };
-};
-
-export const sysCronControllerFindAll = (
-  params?: SysCronControllerFindAllParams,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<SysCron[]>(
-    { url: `/api/sys-cron`, method: 'GET', params },
-    options,
-  );
-};
-
-export const getSysCronControllerFindAllKey = (
-  params?: SysCronControllerFindAllParams,
-) => [`/api/sys-cron`, ...(params ? [params] : [])] as const;
-
-export type SysCronControllerFindAllQueryResult = NonNullable<
-  Awaited<ReturnType<typeof sysCronControllerFindAll>>
->;
-export type SysCronControllerFindAllQueryError = unknown;
-
-export const useSysCronControllerFindAll = <TError = unknown>(
-  params?: SysCronControllerFindAllParams,
-  options?: {
-    swr?: SWRConfiguration<
-      Awaited<ReturnType<typeof sysCronControllerFindAll>>,
-      TError
-    > & { swrKey?: Key; enabled?: boolean };
-    request?: SecondParameter<typeof customInstance>;
-  },
-) => {
-  const { swr: swrOptions, request: requestOptions } = options ?? {};
-
-  const isEnabled = swrOptions?.enabled !== false;
-  const swrKey =
-    swrOptions?.swrKey ??
-    (() => (isEnabled ? getSysCronControllerFindAllKey(params) : null));
-  const swrFn = () => sysCronControllerFindAll(params, requestOptions);
-
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
-    swrKey,
-    swrFn,
-    swrOptions,
-  );
-
-  return {
-    swrKey,
-    ...query,
-  };
-};
-
-export const sysCronControllerFindById = (
-  id: number,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<SysCron>(
-    { url: `/api/sys-cron/${id}`, method: 'GET' },
-    options,
-  );
-};
-
-export const getSysCronControllerFindByIdKey = (id: number) =>
-  [`/api/sys-cron/${id}`] as const;
-
-export type SysCronControllerFindByIdQueryResult = NonNullable<
-  Awaited<ReturnType<typeof sysCronControllerFindById>>
->;
-export type SysCronControllerFindByIdQueryError = unknown;
-
-export const useSysCronControllerFindById = <TError = unknown>(
-  id: number,
-  options?: {
-    swr?: SWRConfiguration<
-      Awaited<ReturnType<typeof sysCronControllerFindById>>,
-      TError
-    > & { swrKey?: Key; enabled?: boolean };
-    request?: SecondParameter<typeof customInstance>;
-  },
-) => {
-  const { swr: swrOptions, request: requestOptions } = options ?? {};
-
-  const isEnabled = swrOptions?.enabled !== false && !!id;
-  const swrKey =
-    swrOptions?.swrKey ??
-    (() => (isEnabled ? getSysCronControllerFindByIdKey(id) : null));
-  const swrFn = () => sysCronControllerFindById(id, requestOptions);
-
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
-    swrKey,
-    swrFn,
-    swrOptions,
-  );
-
-  return {
-    swrKey,
-    ...query,
-  };
-};
 
 export const permissionControllerFindAllWithRelations = (
   options?: SecondParameter<typeof customInstance>,
@@ -2557,206 +2198,6 @@ export const useItemTypeControllerDelete = <TError = unknown>(
   const swrFn = getItemTypeControllerDeleteMutationFetcher(id, requestOptions);
 
   const query = useSWRMutation(swrKey, swrFn, swrOptions);
-
-  return {
-    swrKey,
-    ...query,
-  };
-};
-
-export const transactionControllerCount = (
-  params?: TransactionControllerCountParams,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<number>(
-    { url: `/api/transactions/count`, method: 'GET', params },
-    options,
-  );
-};
-
-export const getTransactionControllerCountKey = (
-  params?: TransactionControllerCountParams,
-) => [`/api/transactions/count`, ...(params ? [params] : [])] as const;
-
-export type TransactionControllerCountQueryResult = NonNullable<
-  Awaited<ReturnType<typeof transactionControllerCount>>
->;
-export type TransactionControllerCountQueryError = unknown;
-
-export const useTransactionControllerCount = <TError = unknown>(
-  params?: TransactionControllerCountParams,
-  options?: {
-    swr?: SWRConfiguration<
-      Awaited<ReturnType<typeof transactionControllerCount>>,
-      TError
-    > & { swrKey?: Key; enabled?: boolean };
-    request?: SecondParameter<typeof customInstance>;
-  },
-) => {
-  const { swr: swrOptions, request: requestOptions } = options ?? {};
-
-  const isEnabled = swrOptions?.enabled !== false;
-  const swrKey =
-    swrOptions?.swrKey ??
-    (() => (isEnabled ? getTransactionControllerCountKey(params) : null));
-  const swrFn = () => transactionControllerCount(params, requestOptions);
-
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
-    swrKey,
-    swrFn,
-    swrOptions,
-  );
-
-  return {
-    swrKey,
-    ...query,
-  };
-};
-
-export const transactionControllerFindAll = (
-  params?: TransactionControllerFindAllParams,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<Transaction[]>(
-    { url: `/api/transactions`, method: 'GET', params },
-    options,
-  );
-};
-
-export const getTransactionControllerFindAllKey = (
-  params?: TransactionControllerFindAllParams,
-) => [`/api/transactions`, ...(params ? [params] : [])] as const;
-
-export type TransactionControllerFindAllQueryResult = NonNullable<
-  Awaited<ReturnType<typeof transactionControllerFindAll>>
->;
-export type TransactionControllerFindAllQueryError = unknown;
-
-export const useTransactionControllerFindAll = <TError = unknown>(
-  params?: TransactionControllerFindAllParams,
-  options?: {
-    swr?: SWRConfiguration<
-      Awaited<ReturnType<typeof transactionControllerFindAll>>,
-      TError
-    > & { swrKey?: Key; enabled?: boolean };
-    request?: SecondParameter<typeof customInstance>;
-  },
-) => {
-  const { swr: swrOptions, request: requestOptions } = options ?? {};
-
-  const isEnabled = swrOptions?.enabled !== false;
-  const swrKey =
-    swrOptions?.swrKey ??
-    (() => (isEnabled ? getTransactionControllerFindAllKey(params) : null));
-  const swrFn = () => transactionControllerFindAll(params, requestOptions);
-
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
-    swrKey,
-    swrFn,
-    swrOptions,
-  );
-
-  return {
-    swrKey,
-    ...query,
-  };
-};
-
-export const transactionControllerCreate = (
-  transactionDto: TransactionDto,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<null>(
-    {
-      url: `/api/transactions`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      data: transactionDto,
-    },
-    options,
-  );
-};
-
-export const getTransactionControllerCreateMutationFetcher = (
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return (_: Key, { arg }: { arg: TransactionDto }): Promise<null> => {
-    return transactionControllerCreate(arg, options);
-  };
-};
-export const getTransactionControllerCreateMutationKey = () =>
-  [`/api/transactions`] as const;
-
-export type TransactionControllerCreateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof transactionControllerCreate>>
->;
-export type TransactionControllerCreateMutationError = unknown;
-
-export const useTransactionControllerCreate = <TError = unknown>(options?: {
-  swr?: SWRMutationConfiguration<
-    Awaited<ReturnType<typeof transactionControllerCreate>>,
-    TError,
-    Key,
-    TransactionDto,
-    Awaited<ReturnType<typeof transactionControllerCreate>>
-  > & { swrKey?: string };
-  request?: SecondParameter<typeof customInstance>;
-}) => {
-  const { swr: swrOptions, request: requestOptions } = options ?? {};
-
-  const swrKey =
-    swrOptions?.swrKey ?? getTransactionControllerCreateMutationKey();
-  const swrFn = getTransactionControllerCreateMutationFetcher(requestOptions);
-
-  const query = useSWRMutation(swrKey, swrFn, swrOptions);
-
-  return {
-    swrKey,
-    ...query,
-  };
-};
-
-export const transactionControllerFindById = (
-  id: number,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<Transaction>(
-    { url: `/api/transactions/${id}`, method: 'GET' },
-    options,
-  );
-};
-
-export const getTransactionControllerFindByIdKey = (id: number) =>
-  [`/api/transactions/${id}`] as const;
-
-export type TransactionControllerFindByIdQueryResult = NonNullable<
-  Awaited<ReturnType<typeof transactionControllerFindById>>
->;
-export type TransactionControllerFindByIdQueryError = unknown;
-
-export const useTransactionControllerFindById = <TError = unknown>(
-  id: number,
-  options?: {
-    swr?: SWRConfiguration<
-      Awaited<ReturnType<typeof transactionControllerFindById>>,
-      TError
-    > & { swrKey?: Key; enabled?: boolean };
-    request?: SecondParameter<typeof customInstance>;
-  },
-) => {
-  const { swr: swrOptions, request: requestOptions } = options ?? {};
-
-  const isEnabled = swrOptions?.enabled !== false && !!id;
-  const swrKey =
-    swrOptions?.swrKey ??
-    (() => (isEnabled ? getTransactionControllerFindByIdKey(id) : null));
-  const swrFn = () => transactionControllerFindById(id, requestOptions);
-
-  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
-    swrKey,
-    swrFn,
-    swrOptions,
-  );
 
   return {
     swrKey,
