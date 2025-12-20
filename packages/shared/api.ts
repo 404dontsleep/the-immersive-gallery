@@ -2683,6 +2683,188 @@ export const useLanguageControllerDelete = <TError = unknown>(
   };
 };
 
+export const languagePublicControllerGetCountries = (
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    { url: `/api/language-public/countries`, method: 'GET' },
+    options,
+  );
+};
+
+export const getLanguagePublicControllerGetCountriesKey = () =>
+  [`/api/language-public/countries`] as const;
+
+export type LanguagePublicControllerGetCountriesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languagePublicControllerGetCountries>>
+>;
+export type LanguagePublicControllerGetCountriesQueryError = unknown;
+
+export const useLanguagePublicControllerGetCountries = <
+  TError = unknown,
+>(options?: {
+  swr?: SWRConfiguration<
+    Awaited<ReturnType<typeof languagePublicControllerGetCountries>>,
+    TError
+  > & { swrKey?: Key; enabled?: boolean };
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguagePublicControllerGetCountriesKey() : null));
+  const swrFn = () => languagePublicControllerGetCountries(requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languagePublicControllerGetCodes = (
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    { url: `/api/language-public/codes`, method: 'GET' },
+    options,
+  );
+};
+
+export const getLanguagePublicControllerGetCodesKey = () =>
+  [`/api/language-public/codes`] as const;
+
+export type LanguagePublicControllerGetCodesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languagePublicControllerGetCodes>>
+>;
+export type LanguagePublicControllerGetCodesQueryError = unknown;
+
+export const useLanguagePublicControllerGetCodes = <
+  TError = unknown,
+>(options?: {
+  swr?: SWRConfiguration<
+    Awaited<ReturnType<typeof languagePublicControllerGetCodes>>,
+    TError
+  > & { swrKey?: Key; enabled?: boolean };
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguagePublicControllerGetCodesKey() : null));
+  const swrFn = () => languagePublicControllerGetCodes(requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languagePublicControllerGetLanguages = (
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    { url: `/api/language-public/languages`, method: 'GET' },
+    options,
+  );
+};
+
+export const getLanguagePublicControllerGetLanguagesKey = () =>
+  [`/api/language-public/languages`] as const;
+
+export type LanguagePublicControllerGetLanguagesQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languagePublicControllerGetLanguages>>
+>;
+export type LanguagePublicControllerGetLanguagesQueryError = unknown;
+
+export const useLanguagePublicControllerGetLanguages = <
+  TError = unknown,
+>(options?: {
+  swr?: SWRConfiguration<
+    Awaited<ReturnType<typeof languagePublicControllerGetLanguages>>,
+    TError
+  > & { swrKey?: Key; enabled?: boolean };
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguagePublicControllerGetLanguagesKey() : null));
+  const swrFn = () => languagePublicControllerGetLanguages(requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const languagePublicControllerGet = (
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    { url: `/api/language-public`, method: 'GET' },
+    options,
+  );
+};
+
+export const getLanguagePublicControllerGetKey = () =>
+  [`/api/language-public`] as const;
+
+export type LanguagePublicControllerGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof languagePublicControllerGet>>
+>;
+export type LanguagePublicControllerGetQueryError = unknown;
+
+export const useLanguagePublicControllerGet = <TError = unknown>(options?: {
+  swr?: SWRConfiguration<
+    Awaited<ReturnType<typeof languagePublicControllerGet>>,
+    TError
+  > & { swrKey?: Key; enabled?: boolean };
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getLanguagePublicControllerGetKey() : null));
+  const swrFn = () => languagePublicControllerGet(requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
 export const languageCodeControllerCount = (
   params?: LanguageCodeControllerCountParams,
   options?: SecondParameter<typeof customInstance>,

@@ -8,5 +8,6 @@ import { LanguageCodeService } from './language-code.service';
   imports: [TypeOrmModule.forFeature([LanguageCode])],
   controllers: [LanguageCodeController],
   providers: [LanguageCodeService],
+  exports: [LanguageCodeService],
 })
 export class LanguageCodeModule {}

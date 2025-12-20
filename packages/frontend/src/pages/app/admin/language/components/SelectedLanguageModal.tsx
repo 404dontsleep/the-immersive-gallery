@@ -54,6 +54,9 @@ const SelectedLanguageModal: React.FC<SelectedLanguageModalProps> = (props) => {
         </>
       }
     >
+      <Form.Item<LanguageDto> name="id" label="Language" hidden>
+        <InputNumber placeholder="Enter id" />
+      </Form.Item>
       <Form.Item<LanguageDto>
         name="code"
         label="Language Code"

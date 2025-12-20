@@ -8,5 +8,6 @@ import { LanguageCountryService } from './language-country.service';
   imports: [TypeOrmModule.forFeature([LanguageCountry])],
   controllers: [LanguageCountryController],
   providers: [LanguageCountryService],
+  exports: [LanguageCountryService],
 })
 export class LanguageCountryModule {}

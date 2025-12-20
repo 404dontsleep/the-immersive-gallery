@@ -8,6 +8,7 @@ export const API_BASE_URL =
 
 export const ROUTES = {
   HOME: '/',
+  ABOUT: '/about',
   MUSEUM: '/museum',
   ITEM_DETAIL: '/item/:id',
   ITEM_XR: '/item/:id/xr',

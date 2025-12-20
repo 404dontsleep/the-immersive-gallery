@@ -1,3 +1,4 @@
+@import 'tailwindcss';
 /* CSS Variables - Color System */
 :root {
   /* Primary Colors */
@@ -42,11 +43,11 @@
   --gradient-white: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
 }
 
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 html,
 body,
@@ -74,16 +75,124 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Button reset */
-button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-family: inherit;
+/* Tailwind CSS default color palette as CSS variables for easy reference/use */
+@theme {
+  --color-museum: #fff6ea;
+  --color-museum-50: #fef8f1;
+
+  --color-cbase-50: #fafafa;
+  --color-cbase-100: #f4f4f5;
+  --color-cbase-200: #e4e4e7;
+  --color-cbase-300: #d4d4d8;
+  --color-cbase-400: #a1a1aa;
+  --color-cbase-500: #71717a;
+  --color-cbase-600: #52525b;
+  --color-cbase-700: #3f3f46;
+  --color-cbase-800: #27272a;
+  --color-cbase-900: #18181b;
+  --color-cbase: var(--color-cbase-500);
+
+  /* Primary palette */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+  --color-primary: var(--color-primary-500);
+
+  /* Secondary palette (Purple from Tailwind) */
+  --color-secondary-50: #faf5ff;
+  --color-secondary-100: #f3e8ff;
+  --color-secondary-200: #e9d5ff;
+  --color-secondary-300: #d8b4fe;
+  --color-secondary-400: #c084fc;
+  --color-secondary-500: #a855f7;
+  --color-secondary-600: #9333ea;
+  --color-secondary-700: #7e22ce;
+  --color-secondary-800: #6d28d9;
+  --color-secondary-900: #581c87;
+  --color-secondary: var(--color-secondary-500);
+
+  /* Success */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+  --color-success: var(--color-success-500);
+
+  /* Error */
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+  --color-error: var(--color-error-500);
+
+  /* Info */
+  --color-info-50: #f0f9ff;
+  --color-info-100: #e0f2fe;
+  --color-info-200: #bae6fd;
+  --color-info-300: #7dd3fc;
+  --color-info-400: #38bdf8;
+  --color-info-500: #0ea5e9;
+  --color-info-600: #0284c7;
+  --color-info-700: #0369a1;
+  --color-info-800: #075985;
+  --color-info-900: #0c4a6e;
+  --color-info: var(--color-info-500);
+
+  /* Warning (Amber) */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e42;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+  --color-warning: var(--color-warning-500);
 }
 
-/* Link reset */
-a {
-  text-decoration: none;
-  color: inherit;
+::-webkit-scrollbar {
+  width: 10px;
+  background: var(--color-bg-50, var(--color-museum-50));
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-200, var(--color-museum-50));
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-300, var(--color-museum-50));
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-100, var(--color-museum-50));
+  border-radius: 8px;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-text-secondary, var(--color-museum-50))
+    var(--color-bg-100, var(--color-museum-50));
 }
