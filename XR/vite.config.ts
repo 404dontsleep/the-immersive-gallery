@@ -16,9 +16,16 @@ export default defineConfig({
     port: 2999,
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, './src'),
+      },
+      {
+        find: '@api',
+        replacement: path.resolve(__dirname, '../../packages/shared'),
+      },
+    ],
     dedupe: ['three'],
   },
 });

@@ -6,6 +6,9 @@ import { Outlet } from 'react-router-dom';
 import userRouter from './user/user.router';
 import configRouter from './config/config.router';
 import languageRouter from './language/language.router';
+import assetsRouter from './assets/assets.router';
+import categoryRouter from './category/category.router';
+import itemRouter from './item/item.router';
 // import itemTypeRouter from './item-type/item-type.router';
 // import transactionRouter from './transaction/transaction.router';
 // import bankRouter from './bank/bank.router';
@@ -26,6 +29,9 @@ const adminRouter = defineRouter({
         ...userRouter.routes,
         ...configRouter.routes,
         ...languageRouter.routes,
+        ...assetsRouter.routes,
+        ...categoryRouter.routes,
+        ...itemRouter.routes,
         // ...itemTypeRouter.routes,
         // ...transactionRouter.routes,
         // ...bankRouter.routes,

@@ -3,7 +3,8 @@ import { PageLayout } from '../../components/layouts/PageLayout';
 import { ROUTES } from '../../config/constants';
 import './Home.css';
 import { useLanguageStore } from '@/stores/language.store';
-import { Button, Col, Divider, Flex, Image, Row } from 'antd';
+import { Button, Col, Divider, Flex, Row } from 'antd';
+import Image from '@/components/common/PlaceHolderImage';
 
 export function HomePage() {
   const navigate = useNavigate();

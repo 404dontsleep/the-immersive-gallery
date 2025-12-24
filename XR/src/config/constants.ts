@@ -13,6 +13,10 @@ export const ROUTES = {
   ITEM_DETAIL: '/item/:id',
   ITEM_XR: '/item/:id/xr',
   MUSEUM_VR: '/museum-vr',
+  MUSEUM_CATEGORY: '/museum/:categoryId',
+  MUSEUM_ITEM: '/museum/:categoryId/item/:itemId',
+  MUSEUM_ITEM_XR: '/museum/:categoryId/item/:itemId/xr',
+  MUSEUM_ITEM_DETAIL: '/museum/:categoryId/item/:itemId/detail',
 } as const;
 
 export const XR_CONFIG = {

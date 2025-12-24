@@ -4,6 +4,9 @@ import { EnumPermission } from '@api';
 import BaseMenuItem from '@/components/Base/BaseMenuItem';
 import { Settings, ShieldCheckIcon, UserIcon } from 'lucide-react';
 import LanguageSider from './language/language.sider';
+import AssetsSider from './assets/assets.sider';
+import CategorySider from './category/category.sider';
+import ItemSider from './item/item.sider';
 export default function AdminSider() {
   return (
     <AutoSider>
@@ -29,6 +32,9 @@ export default function AdminSider() {
         />
       </SysPermission>
       <LanguageSider />
+      <AssetsSider />
+      <CategorySider />
+      <ItemSider />
     </AutoSider>
   );
 }
