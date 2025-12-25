@@ -1,4 +1,3 @@
-import { itemsService } from '@/services/items.service';
 import { Container, Text } from '@react-three/uikit';
 import {
   Tabs,
@@ -6,23 +5,20 @@ import {
   TabsList,
   TabsTrigger,
 } from '@react-three/uikit-default';
-import { useCallback } from 'react';
-import useSWR from 'swr';
 import ItemCard from './ItemCard';
+import useItemContext from '@/stores/ItemContext/useItemContext';
+import { useLanguageStore } from '@/stores/language.store';
+import { useCallback } from 'react';
 
 export default function ItemList() {
-  const { data: items } = useSWR('items', () => itemsService.getItems());
-  const { data: categories } = useSWR('categories', () =>
-    itemsService.getCategories(),
-  );
-
+  const { items, categories } = useItemContext();
+  const { getLanguage } = useLanguageStore();
   const itemByCategory = useCallback(
     (categoryId: string) => {
-      return items?.filter((item) => item.categoryId === categoryId);
+      return items?.filter((item) => item.category.id === Number(categoryId));
     },
     [items],
   );
-
   return (
     <Container
       display={'flex'}
@@ -41,11 +37,11 @@ export default function ItemList() {
       >
         <TabsList>
           <TabsTrigger value="all">
-            <Text>All</Text>
+            <Text>{getLanguage('ALL')}</Text>
           </TabsTrigger>
           {categories?.map((category) => (
-            <TabsTrigger key={category.id} value={category.id}>
-              <Text>{category.name}</Text>
+            <TabsTrigger key={category.id} value={category.id.toString()}>
+              <Text>{getLanguage(category.name)}</Text>
             </TabsTrigger>
           ))}
         </TabsList>
@@ -64,7 +60,7 @@ export default function ItemList() {
         {categories?.map((category) => (
           <TabsContent
             key={category.id}
-            value={category.id}
+            value={category.id.toString()}
             display={'flex'}
             flexDirection={'column'}
             gap={20}
@@ -73,10 +69,10 @@ export default function ItemList() {
           >
             <Container display={'flex'} flexDirection={'column'} gap={10}>
               <Text fontSize={20} fontWeight={600}>
-                {category.name}
+                {getLanguage(category.name)}
               </Text>
               <Text fontSize={16} fontWeight={400}>
-                {category.description}
+                {getLanguage(category.description)}
               </Text>
             </Container>
             <Container
@@ -85,7 +81,7 @@ export default function ItemList() {
               flexWrap={'wrap'}
               gap={10}
             >
-              {itemByCategory(category.id)?.map((item) => (
+              {itemByCategory(category.id.toString())?.map((item) => (
                 <ItemCard key={item.id} item={item} />
               ))}
             </Container>

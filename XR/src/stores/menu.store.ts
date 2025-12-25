@@ -1,4 +1,4 @@
-import type { Item } from '@/types';
+import type { Item } from '@/shared/api';
 import { create } from 'zustand';
 
 export enum MenuType {
@@ -17,17 +17,38 @@ export interface MenuStore {
   mode: MenuMode;
   setMode: (mode: MenuMode) => void;
   currentMenu: MenuType | null;
+  previousMenu: MenuType[];
   setCurrentMenu: (menu: MenuType | null) => void;
+  goBack: () => void;
 
   selectedItem: Item | null;
   setSelectedItem: (item: Item | null) => void;
 }
 
-export const useMenuStore = create<MenuStore>((set) => ({
+export const useMenuStore = create<MenuStore>((set, get) => ({
   mode: MenuMode.WEB,
   setMode: (mode) => set({ mode }),
   currentMenu: MenuType.HOME,
-  setCurrentMenu: (menu) => set({ currentMenu: menu }),
+  previousMenu: [],
+  setCurrentMenu: (menu) => {
+    const previousMenu = get().currentMenu;
+    if (previousMenu) {
+      set({
+        previousMenu: [...get().previousMenu, previousMenu],
+        currentMenu: menu,
+      });
+    } else {
+      set({ currentMenu: menu });
+    }
+  },
+  goBack: () => {
+    if (get().previousMenu.length > 0) {
+      set({ currentMenu: get().previousMenu[get().previousMenu.length - 1] });
+      set({ previousMenu: get().previousMenu.slice(0, -1) });
+    } else {
+      set({ currentMenu: MenuType.HOME });
+    }
+  },
 
   selectedItem: null,
   setSelectedItem: (item) => set({ selectedItem: item }),

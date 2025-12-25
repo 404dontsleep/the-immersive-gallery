@@ -304,7 +304,11 @@ export default function LanguagePage() {
         scroll={{ x: 'max-content' }}
       />
       <SelectedLanguageCountryModal onOk={handleOkCountry} />
-      <SelectedLanguageModal onOk={handleOkLanguage} />
+      <SelectedLanguageModal
+        onOk={handleOkLanguage}
+        selectedCode={selectedCode}
+        selectedCountry={selectedCountry}
+      />
       <SelectedLanguageCodeModal onOk={handleOkCode} />
     </Card>
   );

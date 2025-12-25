@@ -83,7 +83,7 @@ const SelectedItemModal: React.FC<SelectedItemModalProps> = (props) => {
       >
         <SelectCategorys />
       </Form.Item>
-      <Form.Item<ItemDto> name="assets" label="Assets">
+      <Form.Item<ItemDto> name="assets" label="Assets" className="w-full">
         <Form.List name="assets" initialValue={[{ id: undefined }]}>
           {(fields, { add, remove }) => (
             <>

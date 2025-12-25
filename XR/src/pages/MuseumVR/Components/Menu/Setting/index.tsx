@@ -1,10 +1,11 @@
-import { languageList, useTranslation } from '@/hooks/useTranslation';
 import { Container, Text } from '@react-three/uikit';
 import { Button } from '@react-three/uikit-default';
 import { xrStore } from '@/stores/xr.store';
+import { useLanguageStore } from '@/stores/language.store';
 
 export default function Setting() {
-  const { setLanguage, translation } = useTranslation();
+  const { language, languageList, setLanguage, getLanguage } =
+    useLanguageStore();
   return (
     <Container
       width={'100%'}
@@ -19,20 +20,20 @@ export default function Setting() {
         textAlign={'center'}
         marginBottom={20}
       >
-        {translation.setting.language.title}
+        {getLanguage('LANGUAGE_SELECT')}
       </Text>
       {Object.keys(languageList).map((key) => (
         <Button
           key={key}
-          onClick={() => setLanguage(key as keyof typeof languageList)}
+          onClick={() => setLanguage(key)}
           variant="outline"
+          backgroundColor={language === key ? '#1890ff' : 'white'}
+          hover={{
+            backgroundColor: language === key ? '#1890ff' : 'white',
+          }}
         >
           <Text fontSize={20} fontWeight={600}>
-            {
-              translation.setting.language[
-                key as keyof typeof translation.setting.language
-              ]
-            }
+            {getLanguage(`SETTING_LANGUAGE_${key.toUpperCase()}`)}
           </Text>
         </Button>
       ))}
@@ -42,21 +43,21 @@ export default function Setting() {
         textAlign={'center'}
         marginBottom={20}
       >
-        {translation.setting.mode.title}
+        {getLanguage('SETTING_MODE_TITLE')}
       </Text>
       <Button variant="outline" onClick={() => xrStore.enterVR()}>
         <Text fontSize={20} fontWeight={600}>
-          {translation.setting.mode.enter_vr}
+          {getLanguage('SETTING_MODE_ENTER_VR')}
         </Text>
       </Button>
       <Button variant="outline" onClick={() => xrStore.enterAR()}>
         <Text fontSize={20} fontWeight={600}>
-          {translation.setting.mode.enter_xr}
+          {getLanguage('SETTING_MODE_ENTER_XR')}
         </Text>
       </Button>
       <Button variant="outline" onClick={() => xrStore.destroy()}>
         <Text fontSize={20} fontWeight={600}>
-          {translation.setting.mode.exit}
+          {getLanguage('SETTING_MODE_EXIT')}
         </Text>
       </Button>
     </Container>

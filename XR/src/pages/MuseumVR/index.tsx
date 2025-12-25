@@ -9,6 +9,7 @@ import MuseumRoom from './Components/MuseumRoom';
 import WrapperMenu from './Components/Menu/Wrapper';
 import { setPreferredColorScheme } from '@react-three/uikit';
 import SelectedItem from './Components/SelectedItem';
+import { ItemContextProvider } from '@/stores/ItemContext/item.store';
 
 setPreferredColorScheme('light');
 
@@ -20,30 +21,25 @@ export function MuseumVRPage() {
   }, [orbitControlsMap]);
 
   return (
-    <div className="museum-vr-page">
-      <Canvas
-        gl={{
-          antialias: true,
-          localClippingEnabled: true,
-        }}
-      >
-        <XR store={xrStore}>
-          <XROrigin>
-            <ambientLight intensity={0.4} />
-            <directionalLight
-              position={[5, 10, 5]}
-              intensity={0.8}
-              castShadow
-            />
+    <ItemContextProvider>
+      <div className="museum-vr-page">
+        <Canvas
+          gl={{
+            antialias: true,
+            localClippingEnabled: true,
+          }}
+        >
+          <XR store={xrStore}>
+            <XROrigin>
+              <MuseumRoom />
+              <SelectedItem />
+              <WrapperMenu />
 
-            <MuseumRoom />
-            <SelectedItem />
-            <WrapperMenu />
-
-            <CameraControls enabled={isOrbitControlsEnabled} />
-          </XROrigin>
-        </XR>
-      </Canvas>
-    </div>
+              <CameraControls enabled={isOrbitControlsEnabled} />
+            </XROrigin>
+          </XR>
+        </Canvas>
+      </div>
+    </ItemContextProvider>
   );
 }

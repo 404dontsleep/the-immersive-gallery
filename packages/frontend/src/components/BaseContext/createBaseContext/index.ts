@@ -8,7 +8,7 @@ const ItemMode = {
   RESTORE: 'RESTORE',
 } as const;
 
-type ItemMode = (typeof ItemMode)[keyof typeof ItemMode];
+export type ItemMode = (typeof ItemMode)[keyof typeof ItemMode];
 type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };

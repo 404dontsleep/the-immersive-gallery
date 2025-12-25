@@ -1,4 +1,4 @@
-import { MenuMode, MenuType, useMenuStore } from '@/stores/menu.store';
+import { MenuMode, useMenuStore } from '@/stores/menu.store';
 import { Fullscreen } from '@react-three/uikit';
 import { Button } from '@react-three/uikit-default';
 import { useEffect } from 'react';
@@ -25,14 +25,14 @@ export default function WebProvider({ children }: WebProviderProps) {
 }
 
 function OpenMenuButton() {
-  const { setCurrentMenu, currentMenu } = useMenuStore();
+  const { goBack, currentMenu } = useMenuStore();
   if (currentMenu) return null;
   return (
     <Button
       positionType={'absolute'}
       positionTop={20}
       positionRight={20}
-      onClick={() => setCurrentMenu(MenuType.HOME)}
+      onClick={() => goBack()}
       variant="outline"
     >
       <MenuIcon height={20} width={20} />

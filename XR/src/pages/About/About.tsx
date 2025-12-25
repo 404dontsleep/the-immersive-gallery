@@ -1,34 +1,30 @@
 import { PageLayout } from '@/components/layouts/PageLayout';
 import { useLanguageStore } from '@/stores/language.store';
 import { Col, Divider, Image, Row } from 'antd';
-import { useMemo } from 'react';
 
 export default function About() {
   const { getLanguage } = useLanguageStore();
 
-  const aboutItems = useMemo(
-    () => [
-      {
-        key: 'ABOUT_ITEM_1',
-        title: getLanguage('ABOUT_ITEM_1_TITLE'),
-        description: getLanguage('ABOUT_ITEM_1_DESCRIPTION'),
-        image: getLanguage('ABOUT_ITEM_1_IMAGE'),
-      },
-      {
-        key: 'ABOUT_ITEM_2',
-        title: getLanguage('ABOUT_ITEM_2_TITLE'),
-        description: getLanguage('ABOUT_ITEM_2_DESCRIPTION'),
-        image: getLanguage('ABOUT_ITEM_2_IMAGE'),
-      },
-      {
-        key: 'ABOUT_ITEM_3',
-        title: getLanguage('ABOUT_ITEM_3_TITLE'),
-        description: getLanguage('ABOUT_ITEM_3_DESCRIPTION'),
-        image: getLanguage('ABOUT_ITEM_3_IMAGE'),
-      },
-    ],
-    [getLanguage],
-  );
+  const aboutItems = [
+    {
+      key: 'ABOUT_ITEM_1',
+      title: getLanguage('ABOUT_ITEM_1_TITLE'),
+      description: getLanguage('ABOUT_ITEM_1_DESCRIPTION'),
+      image: getLanguage('ABOUT_ITEM_1_IMAGE'),
+    },
+    {
+      key: 'ABOUT_ITEM_2',
+      title: getLanguage('ABOUT_ITEM_2_TITLE'),
+      description: getLanguage('ABOUT_ITEM_2_DESCRIPTION'),
+      image: getLanguage('ABOUT_ITEM_2_IMAGE'),
+    },
+    {
+      key: 'ABOUT_ITEM_3',
+      title: getLanguage('ABOUT_ITEM_3_TITLE'),
+      description: getLanguage('ABOUT_ITEM_3_DESCRIPTION'),
+      image: getLanguage('ABOUT_ITEM_3_IMAGE'),
+    },
+  ];
 
   return (
     <PageLayout>
@@ -55,8 +51,14 @@ export default function About() {
                 <h2 className="text-lg font-bold text-center mb-4 ring-1 rounded-md">
                   {item.title}
                 </h2>
-                <Image width={'100%'} src={item.image} alt={item.key} />
-                <p className="text-sm text-center">{item.description}</p>
+                <Image
+                  className="object-cover"
+                  width={'100%'}
+                  height={'200px'}
+                  src={item.image}
+                  alt={item.key}
+                />
+                <p className="text-base text-center">{item.description}</p>
               </Col>
             ))}
           </Row>

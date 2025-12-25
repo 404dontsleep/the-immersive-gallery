@@ -1,14 +1,26 @@
 import { Container, Image, Text } from '@react-three/uikit';
-import type { Item } from '@/types';
+import { AssetsItemType, type Item } from '@/shared/api';
 import { MenuType, useMenuStore } from '@/stores/menu.store';
+import { useMemo } from 'react';
+import { useLanguageStore } from '@/stores/language.store';
 
 export default function ItemCard({ item }: { item: Item }) {
   const { setSelectedItem, setCurrentMenu } = useMenuStore();
+  const { getLanguage } = useLanguageStore();
 
   const handleClick = () => {
     setSelectedItem(item);
     setCurrentMenu(MenuType.ITEM_DETAILS);
   };
+
+  const imageUrl = useMemo(() => {
+    const assets = item.assets.find(
+      (asset) => asset.type === AssetsItemType.image,
+    );
+    return assets
+      ? `${import.meta.env.VITE_API_URL}/api/public/assets-items/${assets.id}/stream`
+      : '';
+  }, [item.assets]);
 
   return (
     <Container
@@ -31,7 +43,7 @@ export default function ItemCard({ item }: { item: Item }) {
         minHeight={200}
         width={200}
         height={200}
-        src={item.thumbnailUrl}
+        src={imageUrl}
         borderLeftRadius={10}
       />
       <Container
@@ -49,10 +61,10 @@ export default function ItemCard({ item }: { item: Item }) {
           padding={10}
         >
           <Text fontSize={24} fontWeight={600}>
-            {item.name}
+            {getLanguage(item.name)}
           </Text>
           <Text fontSize={16} fontWeight={400}>
-            {item.description}
+            {getLanguage(item.description)}
           </Text>
         </Container>
       </Container>

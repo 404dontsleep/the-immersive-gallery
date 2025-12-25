@@ -1,5 +1,5 @@
 import BaseContext from '@/components/BaseContext';
-import type { ItemMode } from '@/components/BaseContext/createBaseContext';
+import { ItemMode } from '@/components/BaseContext/createBaseContext';
 import type { LanguageDto } from '@api';
 import useLanguageStore from './useLanguageStore';
 import { Alert, Form, Input, InputNumber, Select } from 'antd';
@@ -11,6 +11,8 @@ import {
 
 type SelectedLanguageModalProps = {
   onOk?: (value: LanguageDto, itemMode: ItemMode) => void;
+  selectedCode?: string;
+  selectedCountry?: string;
 };
 
 const SelectedLanguageModal: React.FC<SelectedLanguageModalProps> = (props) => {
@@ -61,6 +63,7 @@ const SelectedLanguageModal: React.FC<SelectedLanguageModalProps> = (props) => {
         name="code"
         label="Language Code"
         rules={[{ required: true, message: 'Please select language code' }]}
+        initialValue={props.selectedCode}
       >
         <Select
           placeholder="Select language code"
@@ -78,6 +81,7 @@ const SelectedLanguageModal: React.FC<SelectedLanguageModalProps> = (props) => {
         name="country"
         label="Language Country"
         rules={[{ required: true, message: 'Please select language country' }]}
+        initialValue={props.selectedCountry}
       >
         <Select
           placeholder="Select language country"
