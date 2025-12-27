@@ -5,66 +5,59 @@ config:
   look: neo
 ---
 classDiagram
-direction TB
     class BaseEntity {
         +int id
         +Date createdAt
         +Date updatedAt
         +Date|null deletedAt
         +bool isLocked
-
-        +findOne(options?: Options)
-        +findAll(options?: Options)
-        +create(data)
-        +update(id: int, data)
-        +delete(id: int)
     }
 
     class AssetsItem {
-	    +string url
-	    +AssetsItemType type
-	    +string name
-	    +string description
+        +string url
+        +AssetsItemType type
+        +string name
+        +string description
     }
 
     class Category {
-	    +string name
-	    +string description
-	    +int? categoryId
+        +string name
+        +string description
+        +int? categoryId
     }
 
     class Item {
-	    +string name
-	    +string description
-	    +int? categoryId
-	    +AssetsItem[] assets
+        +string name
+        +string description
+        +int? categoryId
+        +AssetsItem[] assets
     }
 
     class Language {
-	    +string code
-	    +string country
-	    +string value
+        +string code
+        +string country
+        +string value
     }
 
     class LanguageCountry {
-	    +string country
-	    +string description
+        +string country
+        +string description
     }
 
     class LanguageCode {
-	    +string code
-	    +string description
+        +string code
+        +string description
     }
 
     class Permission {
-	    +string name
-	    +string description
-	    +bool canDelete
-	    +int[] parentIds
+        +string name
+        +string description
+        +bool canDelete
+        +int[] parentIds
     }
 
     class User {
-	    +string email
+        +string email
     }
 
     AssetsItem --|> BaseEntity
@@ -79,6 +72,7 @@ direction TB
     Item "1" --> "1" Category : category
     LanguageCountry "1" --> "*" Language : languages
     LanguageCode "1" --> "*" Language : languages
+    User "1" --> "*" Inventory : inventories
     Item "*" -- "*" AssetsItem : assets
     Permission "*" -- "*" User : users
     Permission "*" -- "*" Permission : parents / children

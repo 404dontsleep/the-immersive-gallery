@@ -1,0 +1,66 @@
+sequenceDiagram
+    participant Admin
+    participant PermissionService as Permission Service
+    participant ValidateService as Validate Service
+    participant System
+    participant Database
+    participant CacheService as Cache Service
+
+    Note over Admin: Admin Create/Update Flow
+    
+    Admin->>System: Mutation a Create/Update
+    
+    System->>PermissionService: Is Admin Logged in?
+    
+    alt Admin not logged in
+        PermissionService-->>System: no
+        System->>Admin: Notify error then redirect to login page
+        Note over Admin: End
+    else Admin logged in
+        PermissionService-->>System: yes
+        System->>ValidateService: Is data valid?
+        
+        alt Data invalid
+            ValidateService-->>System: no
+            System->>Admin: Notify error data
+            Note over System,Admin: Merge point
+        else Data valid
+            ValidateService-->>System: yes
+            System->>System: Mutation Update/Create
+            System->>Database: INSERT / UPDATE
+            Database-->>System: Success
+            
+            System->>CacheService: Clear Cache
+            CacheService-->>System: Cache cleared
+            
+            System->>System: Data
+            Note over System,Admin: Merge point
+        end
+        
+        System->>Admin: Notify Update/Create Success
+        
+        Admin->>System: Request New Data
+        
+        rect rgb(200, 255, 200)
+            Note over System,CacheService: Query Cache Sub-process
+            System->>System: Query Data
+            
+            System->>CacheService: Cache Hit?
+            
+            alt Cache Hit
+                CacheService-->>System: yes
+                CacheService-->>System: Return cached data
+                System->>System: Data
+            else Cache Miss
+                CacheService-->>System: no
+                System->>Database: Query data
+                Database-->>System: Data
+                System->>CacheService: Cache set
+                CacheService-->>System: Cache set success
+                System->>System: Data
+            end
+        end
+        
+        System->>Admin: Display for Admin
+        Note over Admin: End
+    end

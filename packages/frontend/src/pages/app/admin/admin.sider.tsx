@@ -2,7 +2,7 @@ import { Menu } from 'antd';
 import SysPermission from '@/components/Sys/Permission';
 import { EnumPermission } from '@api';
 import BaseMenuItem from '@/components/Base/BaseMenuItem';
-import { Settings, ShieldCheckIcon, UserIcon } from 'lucide-react';
+import { UserIcon } from 'lucide-react';
 import LanguageSider from './language/language.sider';
 import AssetsSider from './assets/assets.sider';
 import CategorySider from './category/category.sider';
@@ -17,7 +17,7 @@ export default function AdminSider() {
           icon={<UserIcon />}
         />
       </SysPermission>
-      <SysPermission requiredPermissions={EnumPermission.PermissionController}>
+      {/* <SysPermission requiredPermissions={EnumPermission.PermissionController}>
         <BaseMenuItem
           link="/app/admin/permission"
           title="Permission"
@@ -30,7 +30,7 @@ export default function AdminSider() {
           title="Config"
           icon={<Settings />}
         />
-      </SysPermission>
+      </SysPermission> */}
       <LanguageSider />
       <AssetsSider />
       <CategorySider />

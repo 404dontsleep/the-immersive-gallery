@@ -1,0 +1,29 @@
+---
+config:
+  theme: redux
+---
+sequenceDiagram
+    actor User
+    participant System
+    participant CacheService as Cache Service
+    participant Database
+
+    Note over User: View Asset Detail Flow
+    User->>System: View Asset Detail
+    System->>System: Explore Content
+    
+    Note over System,CacheService: Query Cache Sub-process
+    System->>CacheService: Query Cache
+    
+    alt Cache Hit
+        CacheService-->>System: Return cached data
+    else Cache Miss
+        System->>Database: Query data
+        Database-->>System: Data
+        System->>CacheService: Cache set
+        CacheService-->>System: Cache set success
+    end
+    
+    System->>User: Display Asset Detail
+    Note over User: End (Success)
+

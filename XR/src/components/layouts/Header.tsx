@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ROUTES } from '../../config/constants';
 import { useLanguageStore } from '@/stores/language.store';
-import { useMemo } from 'react';
 import { Button, Dropdown } from 'antd';
 import { GlobalOutlined } from '@ant-design/icons';
 
@@ -13,19 +12,16 @@ export function Header() {
     languageList,
     setLanguage,
   } = useLanguageStore();
-  const navItems = useMemo(
-    () => [
-      { path: ROUTES.HOME, label: getLanguage('NAV_HOME') },
-      { path: ROUTES.MUSEUM, label: getLanguage('NAV_MUSEUM') },
-      {
-        path: ROUTES.MUSEUM_VR,
-        label: getLanguage('NAV_MUSEUM_VR'),
-        xx: languageStore,
-      },
-      { path: ROUTES.ABOUT, label: getLanguage('NAV_ABOUT') },
-    ],
-    [getLanguage, languageStore],
-  );
+  const navItems = [
+    { path: ROUTES.HOME, label: getLanguage('NAV_HOME') },
+    { path: ROUTES.MUSEUM, label: getLanguage('NAV_MUSEUM') },
+    {
+      path: ROUTES.MUSEUM_VR,
+      label: getLanguage('NAV_MUSEUM_VR'),
+      xx: languageStore,
+    },
+    { path: ROUTES.ABOUT, label: getLanguage('NAV_ABOUT') },
+  ];
 
   return (
     <header className="fixed top-0 left-0 right-0 h-[70px] bg-zinc-950 backdrop-blur-[10px] z-[1000]">

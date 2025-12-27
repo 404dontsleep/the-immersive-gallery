@@ -1,4 +1,12 @@
-import { Button, Card, Space, Table, type TableColumnsType } from 'antd';
+import {
+  Button,
+  Card,
+  Space,
+  Table,
+  Typography,
+  type TableColumnsType,
+  Flex,
+} from 'antd';
 import useCategoryStore from './components/useCategoryStore';
 import {
   categoryControllerCreate,
@@ -13,6 +21,7 @@ import { ItemMode } from '@/components/BaseContext/createBaseContext';
 import SelectedCategoryModal from './components/SelectedCategoryModal';
 import { PenIcon, PlusIcon, TrashIcon, ArchiveRestore } from 'lucide-react';
 import AssetImage from '@/components/AssetImage';
+import { useLanguageStore } from '@/stores/language.store';
 
 export default function CategoryPage() {
   const { setSelectedData } = useCategoryStore();
@@ -23,6 +32,7 @@ export default function CategoryPage() {
   } = useCategoryControllerFindAll({
     withDeleted: true,
   });
+  const { getLanguage } = useLanguageStore();
 
   const columns = useMemo<TableColumnsType<Category>>(() => {
     return [
@@ -30,11 +40,27 @@ export default function CategoryPage() {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
+        render: (text: string) => (
+          <Flex vertical gap={4}>
+            <Typography.Text>{text}</Typography.Text>
+            <Typography.Text type="secondary">
+              {getLanguage(text)}
+            </Typography.Text>
+          </Flex>
+        ),
       },
       {
         title: 'Description',
         dataIndex: 'description',
         key: 'description',
+        render: (text: string) => (
+          <Flex vertical gap={4}>
+            <Typography.Text>{text}</Typography.Text>
+            <Typography.Text type="secondary">
+              {getLanguage(text)}
+            </Typography.Text>
+          </Flex>
+        ),
       },
       {
         title: 'Icon Assets',

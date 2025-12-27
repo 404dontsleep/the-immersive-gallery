@@ -1,0 +1,41 @@
+---
+config:
+  theme: redux
+---
+sequenceDiagram
+    actor User as Admin, User
+    participant System
+    participant CacheService as Cache Service
+    participant Database
+    participant LOCService as LOC Service
+
+    Note over User: LOC Service Flow
+    User->>System: Request LOC data
+    System->>System: Get LOC data
+    
+    Note over System,CacheService: Query Cache Sub-process
+    System->>CacheService: Query Cache
+    
+    alt Cache Hit
+        CacheService-->>System: Return cached data
+        System->>System: LOC Data
+    else Cache Miss
+        System->>Database: Query LOC data
+        Database-->>System: Data
+        System->>CacheService: Cache set
+        CacheService-->>System: Cache set success
+        System->>System: LOC Data
+    end
+    
+    System->>LOCService: LOC Storage
+    LOCService->>LOCService: Data by selected language
+    LOCService->>User: Display for User
+    Note over User: End (Success)
+    
+    opt Switch Language
+        User->>LOCService: Switch Language
+        LOCService->>LOCService: LOC Storage
+        LOCService->>LOCService: Data by selected language
+        LOCService->>User: Display for User
+    end
+

@@ -5,6 +5,7 @@ import {
   Table,
   Typography,
   type TableColumnsType,
+  Flex,
 } from 'antd';
 import useItemStore from './components/useItemStore';
 import {
@@ -19,6 +20,7 @@ import { useMemo } from 'react';
 import { ItemMode } from '@/components/BaseContext/createBaseContext';
 import SelectedItemModal from './components/SelectedItemModal';
 import { PenIcon, PlusIcon, TrashIcon, ArchiveRestore } from 'lucide-react';
+import { useLanguageStore } from '@/stores/language.store';
 
 export default function ItemPage() {
   const { setSelectedData } = useItemStore();
@@ -29,6 +31,7 @@ export default function ItemPage() {
   } = useItemControllerFindAll({
     withDeleted: true,
   });
+  const { getLanguage } = useLanguageStore();
 
   const columns = useMemo<TableColumnsType<Item>>(() => {
     return [
@@ -36,11 +39,27 @@ export default function ItemPage() {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
+        render: (text: string) => (
+          <Flex vertical gap={4}>
+            <Typography.Text>{text}</Typography.Text>
+            <Typography.Text type="secondary">
+              {getLanguage(text)}
+            </Typography.Text>
+          </Flex>
+        ),
       },
       {
         title: 'Description',
         dataIndex: 'description',
         key: 'description',
+        render: (text: string) => (
+          <Flex vertical gap={4}>
+            <Typography.Text>{text}</Typography.Text>
+            <Typography.Text type="secondary">
+              {getLanguage(text)}
+            </Typography.Text>
+          </Flex>
+        ),
       },
       {
         title: 'Assets Count',
