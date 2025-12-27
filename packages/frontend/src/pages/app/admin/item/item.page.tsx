@@ -41,9 +41,11 @@ export default function ItemPage() {
         key: 'name',
         render: (text: string) => (
           <Flex vertical gap={4}>
-            <Typography.Text>{text}</Typography.Text>
-            <Typography.Text type="secondary">
+            <Typography.Text ellipsis={{ tooltip: true }}>
               {getLanguage(text)}
+            </Typography.Text>
+            <Typography.Text style={{ fontSize: 10 }} type="secondary">
+              {text}
             </Typography.Text>
           </Flex>
         ),
@@ -54,12 +56,15 @@ export default function ItemPage() {
         key: 'description',
         render: (text: string) => (
           <Flex vertical gap={4}>
-            <Typography.Text>{text}</Typography.Text>
-            <Typography.Text type="secondary">
+            <Typography.Text ellipsis={{ tooltip: true }}>
               {getLanguage(text)}
+            </Typography.Text>
+            <Typography.Text style={{ fontSize: 10 }} type="secondary">
+              {text}
             </Typography.Text>
           </Flex>
         ),
+        className: 'max-w-64',
       },
       {
         title: 'Assets Count',

@@ -446,9 +446,15 @@ export interface AssetsItemDtoFindOptionsWhereDto {
   deletedAt?: DateWhereDto;
   isLocked?: BooleanWhereDto;
   url?: StringWhereDto;
+  parentId?: NumberWhereDto;
   type?: StringWhereDto;
   name?: StringWhereDto;
   description?: StringWhereDto;
+}
+
+export interface CreateFolderDto {
+  name: string;
+  parentId?: number;
 }
 
 export type AssetsItemType =
@@ -461,6 +467,7 @@ export const AssetsItemType = {
   audio: 'audio',
   document: 'document',
   model: 'model',
+  folder: 'folder',
 } as const;
 
 export interface AssetsItem {
@@ -471,13 +478,25 @@ export interface AssetsItem {
   deletedAt: string | null;
   isLocked: boolean;
   url: string;
+  parent?: AssetsItem;
+  parentId?: number;
   type: AssetsItemType;
   name: string;
   description: string;
 }
 
 export interface InstanceDto {
-  [key: string]: unknown;
+  id: number;
+  name: string;
+  description: string;
+  parentId?: number;
+}
+
+export interface AssetsItemDto {
+  id: number;
+  name: string;
+  description: string;
+  parentId?: number;
 }
 
 export interface ItemDtoFindManyOptions {
@@ -607,6 +626,8 @@ export const EnumPermission = {
   LanguageCountryControllerDelete: 'LanguageCountryController.Delete',
   LanguageCountryController: 'LanguageCountryController',
   AssetsItemControllerView: 'AssetsItemController.View',
+  AssetsItemControllerUpdate: 'AssetsItemController.Update',
+  AssetsItemControllerDelete: 'AssetsItemController.Delete',
   AssetsItemControllerCreate: 'AssetsItemController.Create',
   AssetsItemController: 'AssetsItemController',
   ItemControllerView: 'ItemController.View',
@@ -740,6 +761,7 @@ export type AssetsItemControllerUploadFileBody = {
   file?: Blob;
   name?: string;
   description?: string;
+  parentId?: number;
 };
 
 export type AssetsItemControllerCountParams = {
@@ -3843,6 +3865,12 @@ export const assetsItemControllerUploadFile = (
       assetsItemControllerUploadFileBody.description,
     );
   }
+  if (assetsItemControllerUploadFileBody.parentId !== undefined) {
+    formData.append(
+      `parentId`,
+      assetsItemControllerUploadFileBody.parentId.toString(),
+    );
+  }
 
   return customInstance<null>(
     {
@@ -3889,6 +3917,63 @@ export const useAssetsItemControllerUploadFile = <TError = unknown>(options?: {
     swrOptions?.swrKey ?? getAssetsItemControllerUploadFileMutationKey();
   const swrFn =
     getAssetsItemControllerUploadFileMutationFetcher(requestOptions);
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const assetsItemControllerCreateFolder = (
+  createFolderDto: CreateFolderDto,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    {
+      url: `/api/assets-items/create-folder`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: createFolderDto,
+    },
+    options,
+  );
+};
+
+export const getAssetsItemControllerCreateFolderMutationFetcher = (
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, { arg }: { arg: CreateFolderDto }): Promise<null> => {
+    return assetsItemControllerCreateFolder(arg, options);
+  };
+};
+export const getAssetsItemControllerCreateFolderMutationKey = () =>
+  [`/api/assets-items/create-folder`] as const;
+
+export type AssetsItemControllerCreateFolderMutationResult = NonNullable<
+  Awaited<ReturnType<typeof assetsItemControllerCreateFolder>>
+>;
+export type AssetsItemControllerCreateFolderMutationError = unknown;
+
+export const useAssetsItemControllerCreateFolder = <
+  TError = unknown,
+>(options?: {
+  swr?: SWRMutationConfiguration<
+    Awaited<ReturnType<typeof assetsItemControllerCreateFolder>>,
+    TError,
+    Key,
+    CreateFolderDto,
+    Awaited<ReturnType<typeof assetsItemControllerCreateFolder>>
+  > & { swrKey?: string };
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getAssetsItemControllerCreateFolderMutationKey();
+  const swrFn =
+    getAssetsItemControllerCreateFolderMutationFetcher(requestOptions);
 
   const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
@@ -4037,6 +4122,124 @@ export const useAssetsItemControllerFindById = <TError = unknown>(
     swrFn,
     swrOptions,
   );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const assetsItemControllerUpdate = (
+  id: number,
+  assetsItemDto: AssetsItemDto,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    {
+      url: `/api/assets-items/${id}`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: assetsItemDto,
+    },
+    options,
+  );
+};
+
+export const getAssetsItemControllerUpdateMutationFetcher = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, { arg }: { arg: AssetsItemDto }): Promise<null> => {
+    return assetsItemControllerUpdate(id, arg, options);
+  };
+};
+export const getAssetsItemControllerUpdateMutationKey = (id: number) =>
+  [`/api/assets-items/${id}`] as const;
+
+export type AssetsItemControllerUpdateMutationResult = NonNullable<
+  Awaited<ReturnType<typeof assetsItemControllerUpdate>>
+>;
+export type AssetsItemControllerUpdateMutationError = unknown;
+
+export const useAssetsItemControllerUpdate = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof assetsItemControllerUpdate>>,
+      TError,
+      Key,
+      AssetsItemDto,
+      Awaited<ReturnType<typeof assetsItemControllerUpdate>>
+    > & { swrKey?: string };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getAssetsItemControllerUpdateMutationKey(id);
+  const swrFn = getAssetsItemControllerUpdateMutationFetcher(
+    id,
+    requestOptions,
+  );
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const assetsItemControllerDelete = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    { url: `/api/assets-items/${id}`, method: 'DELETE' },
+    options,
+  );
+};
+
+export const getAssetsItemControllerDeleteMutationFetcher = (
+  id: number,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, __: { arg: Arguments }): Promise<null> => {
+    return assetsItemControllerDelete(id, options);
+  };
+};
+export const getAssetsItemControllerDeleteMutationKey = (id: number) =>
+  [`/api/assets-items/${id}`] as const;
+
+export type AssetsItemControllerDeleteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof assetsItemControllerDelete>>
+>;
+export type AssetsItemControllerDeleteMutationError = unknown;
+
+export const useAssetsItemControllerDelete = <TError = unknown>(
+  id: number,
+  options?: {
+    swr?: SWRMutationConfiguration<
+      Awaited<ReturnType<typeof assetsItemControllerDelete>>,
+      TError,
+      Key,
+      Arguments,
+      Awaited<ReturnType<typeof assetsItemControllerDelete>>
+    > & { swrKey?: string };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey =
+    swrOptions?.swrKey ?? getAssetsItemControllerDeleteMutationKey(id);
+  const swrFn = getAssetsItemControllerDeleteMutationFetcher(
+    id,
+    requestOptions,
+  );
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,

@@ -42,9 +42,11 @@ export default function CategoryPage() {
         key: 'name',
         render: (text: string) => (
           <Flex vertical gap={4}>
-            <Typography.Text>{text}</Typography.Text>
-            <Typography.Text type="secondary">
+            <Typography.Text ellipsis={{ tooltip: true }}>
               {getLanguage(text)}
+            </Typography.Text>
+            <Typography.Text style={{ fontSize: 10 }} type="secondary">
+              {text}
             </Typography.Text>
           </Flex>
         ),
@@ -55,12 +57,15 @@ export default function CategoryPage() {
         key: 'description',
         render: (text: string) => (
           <Flex vertical gap={4}>
-            <Typography.Text>{text}</Typography.Text>
-            <Typography.Text type="secondary">
+            <Typography.Text ellipsis={{ tooltip: true }}>
               {getLanguage(text)}
+            </Typography.Text>
+            <Typography.Text style={{ fontSize: 10 }} type="secondary">
+              {text}
             </Typography.Text>
           </Flex>
         ),
+        className: 'max-w-64',
       },
       {
         title: 'Icon Assets',
@@ -153,7 +158,7 @@ export default function CategoryPage() {
         rowKey="id"
         pagination={{ pageSize: 20 }}
         size="middle"
-        scroll={{ x: 'max-content' }}
+        scroll={{ x: 'fit-content' }}
       />
       <SelectedCategoryModal onOk={onOk} />
     </Card>

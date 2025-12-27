@@ -1,13 +1,17 @@
-import { useBaseContext } from '@/components/BaseContext/useBaseContext';
 import { useAssetsItemControllerFindAll } from '@api';
 import { Image, Select, Typography, type SelectProps, Row, Col } from 'antd';
 import { useMemo } from 'react';
+import { useBaseContext } from '@/components/BaseContext/useBaseContext';
+import { useLanguageStore } from '@/stores/language.store';
 
-type SelectAssetsProps = {} & SelectProps;
+export type SelectAssetsProps = SelectProps & {
+  sysOnChange?: (value: number) => void;
+};
+
 export default function SelectAssets({ ...props }: SelectAssetsProps) {
   const { readOnly } = useBaseContext();
-
   const { data: assets } = useAssetsItemControllerFindAll();
+  const { getLanguage } = useLanguageStore();
 
   const options = useMemo<SelectProps['options']>(() => {
     return assets?.map((asset) => ({
@@ -16,6 +20,14 @@ export default function SelectAssets({ ...props }: SelectAssetsProps) {
       data: asset,
     }));
   }, [assets]);
+
+  if (readOnly) {
+    return (
+      <Typography.Text>
+        {assets?.find((asset) => asset.id === props.value)?.name}
+      </Typography.Text>
+    );
+  }
 
   return (
     <Select
@@ -31,12 +43,24 @@ export default function SelectAssets({ ...props }: SelectAssetsProps) {
             )}
           </Col>
           <Col span={20}>
-            <Typography.Text>{option.data?.data.name}</Typography.Text>
+            <Typography.Text>
+              {getLanguage(option.data?.data.name)}
+            </Typography.Text>
           </Col>
         </Row>
       )}
+      labelRender={(label) => (
+        <Typography.Text>
+          {getLanguage((label.label as string) ?? '')}
+        </Typography.Text>
+      )}
       options={options}
       {...props}
+      disabled={readOnly}
+      onChange={(value) => {
+        props.onChange?.(value);
+        props.sysOnChange?.(value);
+      }}
     />
   );
 }

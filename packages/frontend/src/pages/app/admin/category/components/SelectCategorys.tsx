@@ -1,22 +1,25 @@
 import { useCategoryControllerFindAll } from '@api';
 import { useMemo } from 'react';
 import { useBaseContext } from '@/components/BaseContext/useBaseContext';
-import { Typography, type SelectProps, Select } from 'antd';
+import { Typography, type SelectProps, Select, Flex } from 'antd';
+import { useLanguageStore } from '@/stores/language.store';
 
 export type SelectCategorysProps = SelectProps & {
   sysOnChange?: (value: number) => void;
 };
 export default function SelectCategorys({ ...props }: SelectCategorysProps) {
   const { readOnly } = useBaseContext();
+  const { getLanguage } = useLanguageStore();
 
   const { data: categories } = useCategoryControllerFindAll();
 
   const options = useMemo(() => {
     return categories?.map((category) => ({
-      label: category.name,
+      label: getLanguage(category.name),
+      description: getLanguage(category.description),
       value: category.id,
     }));
-  }, [categories]);
+  }, [categories, getLanguage]);
 
   if (readOnly) {
     return (
@@ -35,6 +38,16 @@ export default function SelectCategorys({ ...props }: SelectCategorysProps) {
         props.onChange?.(value);
         props.sysOnChange?.(value);
       }}
+      optionRender={(option) => (
+        <Flex vertical gap={4}>
+          <Typography.Text>
+            {getLanguage((option.label as string) ?? '')}
+          </Typography.Text>
+          <Typography.Text type="secondary">
+            {getLanguage(option.data?.description ?? '')}
+          </Typography.Text>
+        </Flex>
+      )}
     />
   );
 }

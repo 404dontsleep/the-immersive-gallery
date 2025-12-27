@@ -1,4 +1,4 @@
-import { AssetsItem } from './assets-item.entity';
+import { AssetsItem, AssetsItemType } from './assets-item.entity';
 import { AssetsItemService } from './assets-item.service';
 import {
   Controller,
@@ -19,7 +19,7 @@ import {
   DefaultPermissionName,
 } from '@/permission/decorators';
 import createBaseController from '@/base/base.controller';
-import { AssetsItemDto } from './assets-item.dto';
+import { AssetsItemDto, CreateFolderDto } from './assets-item.dto';
 
 @Controller('assets-items')
 @ApiTags('assets-items')
@@ -32,9 +32,7 @@ export class AssetsItemController extends createBaseController(
   AssetsItem,
   AssetsItemDto,
   {
-    _delete: false,
     create: false,
-    update: false,
   },
 ) {
   constructor(readonly assetsItemService: AssetsItemService) {
@@ -58,6 +56,9 @@ export class AssetsItemController extends createBaseController(
         description: {
           type: 'string',
         },
+        parentId: {
+          type: 'number',
+        },
       },
     },
   })
@@ -70,7 +71,25 @@ export class AssetsItemController extends createBaseController(
     @UploadedFile() file: Express.Multer.File,
     @Body('name') name: string,
     @Body('description') description: string,
+    @Body('parentId') parentId?: number,
   ): Promise<AssetsItem> {
-    return this.assetsItemService.uploadFile(file, name, description);
+    return this.assetsItemService.uploadFile(file, name, description, parentId);
+  }
+
+  @Post('create-folder')
+  @ApiBody({
+    type: CreateFolderDto,
+  })
+  @RegisterPermissionMethod({
+    name: DefaultPermissionName.Create,
+    description: 'Create new assets folder',
+  })
+  @RequirePermission(DefaultPermissionName.Create)
+  async createFolder(@Body() data: CreateFolderDto): Promise<AssetsItem> {
+    return this.assetsItemService.create({
+      ...data,
+      type: AssetsItemType.FOLDER,
+      url: '', // Folder không cần url
+    });
   }
 }

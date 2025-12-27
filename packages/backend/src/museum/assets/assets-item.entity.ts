@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from '@/base/base-entity';
+import { IsNotEmpty, IsOptional, IsString, IsNumber } from 'class-validator';
 
 export enum AssetsItemType {
   IMAGE = 'image',
@@ -8,13 +9,30 @@ export enum AssetsItemType {
   AUDIO = 'audio',
   DOCUMENT = 'document',
   MODEL = 'model',
+  FOLDER = 'folder',
 }
 
 @Entity()
 export class AssetsItem extends BaseEntity {
-  @Column()
+  @Column({
+    nullable: true,
+  })
   @ApiProperty()
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
   url: string;
+
+  @ManyToOne(() => AssetsItem, { nullable: true, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'parentId' })
+  @ApiProperty({ type: () => AssetsItem, required: false })
+  parent: AssetsItem | null;
+
+  @Column({ nullable: true })
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsNumber()
+  parentId: number | null;
 
   @Column({
     type: 'enum',
@@ -31,7 +49,12 @@ export class AssetsItem extends BaseEntity {
   @ApiProperty()
   name: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   @ApiProperty()
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
   description: string;
 }

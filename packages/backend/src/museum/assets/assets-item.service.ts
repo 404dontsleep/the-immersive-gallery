@@ -74,6 +74,7 @@ export class AssetsItemService extends createBaseService(AssetsItem) {
     file: { originalname: string; buffer: Buffer },
     name: string,
     description: string,
+    parentId?: number,
   ): Promise<AssetsItem> {
     await this.ensureUploadsDir();
 
@@ -91,6 +92,7 @@ export class AssetsItemService extends createBaseService(AssetsItem) {
       type,
       name,
       description,
+      parentId: parentId ?? null,
     });
 
     return assetsItem;
