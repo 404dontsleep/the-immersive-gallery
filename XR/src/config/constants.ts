@@ -17,6 +17,7 @@ export const ROUTES = {
   MUSEUM_ITEM: '/museum/:categoryId/item/:itemId',
   MUSEUM_ITEM_XR: '/museum/:categoryId/item/:itemId/xr',
   MUSEUM_ITEM_DETAIL: '/museum/:categoryId/item/:itemId/detail',
+  AI_CHAT: '/ai-chat',
 } as const;
 
 export const XR_CONFIG = {

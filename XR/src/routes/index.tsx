@@ -9,6 +9,7 @@ import About from '../pages/About/About';
 import { MuseumItemsByCategory } from '../pages/Museum/MuseumItems';
 import { MuseumPage } from '../pages/Museum/Museum';
 import { MuseumItemDetail } from '../pages/Museum/MuseumItemDetail';
+import { AIChatPage } from '../pages/AIChat';
 
 export function AppRoutes() {
   return (
@@ -26,6 +27,7 @@ export function AppRoutes() {
       <Route path={ROUTES.ITEM_DETAIL} element={<ItemDetailPage />} />
       <Route path={ROUTES.ITEM_XR} element={<ItemXRPage />} />
       <Route path={ROUTES.MUSEUM_VR} element={<MuseumVRPage />} />
+      <Route path={ROUTES.AI_CHAT} element={<AIChatPage />} />
     </Routes>
   );
 }

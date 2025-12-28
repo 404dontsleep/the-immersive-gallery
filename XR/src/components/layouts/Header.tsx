@@ -21,6 +21,7 @@ export function Header() {
       xx: languageStore,
     },
     { path: ROUTES.ABOUT, label: getLanguage('NAV_ABOUT') },
+    { path: ROUTES.AI_CHAT, label: 'VHSM AI' },
   ];
 
   return (
