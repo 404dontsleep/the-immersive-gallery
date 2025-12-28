@@ -8,6 +8,7 @@ import { MuseumVRPage } from '../pages/MuseumVR';
 import About from '../pages/About/About';
 import { MuseumItemsByCategory } from '../pages/Museum/MuseumItems';
 import { MuseumPage } from '../pages/Museum/Museum';
+import { MuseumItemDetail } from '../pages/Museum/MuseumItemDetail';
 
 export function AppRoutes() {
   return (
@@ -20,6 +21,7 @@ export function AppRoutes() {
           path={ROUTES.MUSEUM_CATEGORY}
           element={<MuseumItemsByCategory />}
         />
+        <Route path={ROUTES.MUSEUM_ITEM} element={<MuseumItemDetail />} />
       </Route>
       <Route path={ROUTES.ITEM_DETAIL} element={<ItemDetailPage />} />
       <Route path={ROUTES.ITEM_XR} element={<ItemXRPage />} />
