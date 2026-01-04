@@ -646,6 +646,13 @@ export interface RegistedPermissionDto {
   permission: EnumPermission;
 }
 
+export interface PromptRequestDto {
+  /** The language of the prompt */
+  language: string;
+  /** The context of the prompt */
+  context: string;
+}
+
 export type PermissionControllerCountParams = {
   skip?: number;
   take?: number;
@@ -804,6 +811,10 @@ export type CategoryControllerFindAllParams = {
   take?: number;
   withDeleted?: boolean;
   where?: CategoryDtoFindOptionsWhereDto | CategoryDtoFindOptionsWhereDto[];
+};
+
+export type ChatbotControllerGetSystemPromptParams = {
+  language: string;
 };
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
@@ -4953,6 +4964,108 @@ export const useExportPermissionControllerAllPermissions = <
     swrFn,
     swrOptions,
   );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const chatbotControllerGetSystemPrompt = (
+  params: ChatbotControllerGetSystemPromptParams,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    { url: `/api/chatbot/system-prompt`, method: 'GET', params },
+    options,
+  );
+};
+
+export const getChatbotControllerGetSystemPromptKey = (
+  params: ChatbotControllerGetSystemPromptParams,
+) => [`/api/chatbot/system-prompt`, ...(params ? [params] : [])] as const;
+
+export type ChatbotControllerGetSystemPromptQueryResult = NonNullable<
+  Awaited<ReturnType<typeof chatbotControllerGetSystemPrompt>>
+>;
+export type ChatbotControllerGetSystemPromptQueryError = unknown;
+
+export const useChatbotControllerGetSystemPrompt = <TError = unknown>(
+  params: ChatbotControllerGetSystemPromptParams,
+  options?: {
+    swr?: SWRConfiguration<
+      Awaited<ReturnType<typeof chatbotControllerGetSystemPrompt>>,
+      TError
+    > & { swrKey?: Key; enabled?: boolean };
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const isEnabled = swrOptions?.enabled !== false;
+  const swrKey =
+    swrOptions?.swrKey ??
+    (() => (isEnabled ? getChatbotControllerGetSystemPromptKey(params) : null));
+  const swrFn = () => chatbotControllerGetSystemPrompt(params, requestOptions);
+
+  const query = useSwr<Awaited<ReturnType<typeof swrFn>>, TError>(
+    swrKey,
+    swrFn,
+    swrOptions,
+  );
+
+  return {
+    swrKey,
+    ...query,
+  };
+};
+
+export const chatbotControllerPrompt = (
+  promptRequestDto: PromptRequestDto,
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return customInstance<null>(
+    {
+      url: `/api/chatbot/prompt`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: promptRequestDto,
+    },
+    options,
+  );
+};
+
+export const getChatbotControllerPromptMutationFetcher = (
+  options?: SecondParameter<typeof customInstance>,
+) => {
+  return (_: Key, { arg }: { arg: PromptRequestDto }): Promise<null> => {
+    return chatbotControllerPrompt(arg, options);
+  };
+};
+export const getChatbotControllerPromptMutationKey = () =>
+  [`/api/chatbot/prompt`] as const;
+
+export type ChatbotControllerPromptMutationResult = NonNullable<
+  Awaited<ReturnType<typeof chatbotControllerPrompt>>
+>;
+export type ChatbotControllerPromptMutationError = unknown;
+
+export const useChatbotControllerPrompt = <TError = unknown>(options?: {
+  swr?: SWRMutationConfiguration<
+    Awaited<ReturnType<typeof chatbotControllerPrompt>>,
+    TError,
+    Key,
+    PromptRequestDto,
+    Awaited<ReturnType<typeof chatbotControllerPrompt>>
+  > & { swrKey?: string };
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { swr: swrOptions, request: requestOptions } = options ?? {};
+
+  const swrKey = swrOptions?.swrKey ?? getChatbotControllerPromptMutationKey();
+  const swrFn = getChatbotControllerPromptMutationFetcher(requestOptions);
+
+  const query = useSWRMutation(swrKey, swrFn, swrOptions);
 
   return {
     swrKey,

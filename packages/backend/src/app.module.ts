@@ -7,7 +7,7 @@ import { PermissionModule } from './permission/permission.module';
 import { SysConfigModule } from './sys-config/sys-config.module';
 import { ItemTypeModule } from './inventory/item-type/item-type.module';
 import { MuseumModule } from './museum/museum.module';
-
+import { ChatbotModule } from './chatbot/chatbot.module';
 import { ExportPermissionModule } from './permission/export-permission.module';
 
 @Module({
@@ -24,6 +24,7 @@ import { ExportPermissionModule } from './permission/export-permission.module';
     ItemTypeModule,
     MuseumModule,
     ExportPermissionModule,
+    ChatbotModule,
   ],
   controllers: [],
   providers: [],

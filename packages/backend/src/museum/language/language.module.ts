@@ -16,6 +16,6 @@ import { LanguagePublicService } from './language-public.service';
   ],
   controllers: [LanguageController, LanguagePublicController],
   providers: [LanguageService, LanguagePublicService],
-  exports: [LanguageService],
+  exports: [LanguageService, LanguagePublicService],
 })
 export class LanguageModule {}

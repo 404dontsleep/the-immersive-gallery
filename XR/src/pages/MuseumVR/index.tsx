@@ -6,10 +6,10 @@ import { xrStore } from '@/stores/xr.store';
 import { useUserEventStore } from '@/stores/event.store';
 import { useMemo } from 'react';
 import MuseumRoom from './Components/MuseumRoom';
-import WrapperMenu from './Components/Menu/Wrapper';
 import { setPreferredColorScheme } from '@react-three/uikit';
 import SelectedItem from './Components/SelectedItem';
 import { ItemContextProvider } from '@/stores/ItemContext/item.store';
+import ControllerProvider from '@/providers/ControllerProvider/ControllerProvider';
 
 setPreferredColorScheme('light');
 
@@ -30,13 +30,15 @@ export function MuseumVRPage() {
           }}
         >
           <XR store={xrStore}>
-            <XROrigin>
-              <MuseumRoom />
-              <SelectedItem />
-              <WrapperMenu />
+            <ControllerProvider>
+              <XROrigin>
+                <MuseumRoom />
+                <SelectedItem />
+                {/* <WrapperMenu /> */}
 
-              <CameraControls enabled={isOrbitControlsEnabled} />
-            </XROrigin>
+                <CameraControls enabled={isOrbitControlsEnabled} />
+              </XROrigin>
+            </ControllerProvider>
           </XR>
         </Canvas>
       </div>
