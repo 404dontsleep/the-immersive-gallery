@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import useItemContext from '@/stores/ItemContext/useItemContext';
 import { useLanguageStore } from '@/stores/language.store';
 import AssetImage from '@/components/common/AssetImage';
-import { Carousel, Typography } from 'antd';
+import { Typography, Divider } from 'antd';
 import { AssetsItemType } from '@/shared/api';
 
 const { Title, Text } = Typography;
@@ -39,87 +39,81 @@ export function MuseumItemDetail() {
 
   return (
     <section className="max-w-5xl mx-auto bg-museum p-4 flex flex-col h-full">
-      {/* Banner Carousel */}
+      {/* Item Info */}
+      <div className="mb-8 space-y-4">
+        <div>
+          <Title level={2} className="mb-2">
+            {getLanguage(item.name)}
+          </Title>
+        </div>
+        {item.description && (
+          <div>
+            <Text className="leading-relaxed" style={{ fontSize: '16px' }}>
+              {getLanguage(item.description)}
+            </Text>
+          </div>
+        )}
+      </div>
+
+      {/* Media Assets List - Vertical Layout */}
       {mediaAssets.length > 0 ? (
-        <div className="mb-6">
-          <Carousel
-            autoplay
-            dots
-            className="rounded-lg overflow-hidden"
-            style={{ backgroundColor: '#f5f5f5' }}
-          >
-            {mediaAssets.map((asset) => (
-              <div key={asset.id} className="relative w-full h-[400px]">
+        <div className="space-y-8">
+          {mediaAssets.map((asset, index) => (
+            <div key={asset.id} className="w-full">
+              {/* Media Content */}
+              <div className="mb-4 rounded-lg overflow-hidden">
                 {asset.type === AssetsItemType.image ? (
                   <AssetImage
+                    className="w-full"
                     style={{
                       width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
                     }}
+                    wrapperClassName="w-full"
                     assetsId={asset.id}
                   />
                 ) : (
                   <video
-                    className="object-contain"
+                    className="w-full"
                     style={{
                       width: '100%',
-                      height: '100px',
-                      objectFit: 'cover',
+                      maxHeight: '600px',
+                      objectFit: 'contain',
                       backgroundColor: '#000',
                     }}
                     controls
                     src={`/api/public/assets-items/${asset.id}/stream`}
                   />
                 )}
-                {/* Asset Info Overlay */}
-                {(asset.name || asset.description) && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-6">
-                    {asset.name && (
-                      <Title
-                        level={4}
-                        className="mb-2"
-                        style={{ color: 'white' }}
-                      >
-                        {getLanguage(asset.name)}
-                      </Title>
-                    )}
-                    {asset.description && (
-                      <Text className="text-sm" style={{ color: 'white' }}>
-                        {getLanguage(asset.description)}
-                      </Text>
-                    )}
-                  </div>
-                )}
               </div>
-            ))}
-          </Carousel>
+
+              {/* Asset Info */}
+              {(asset.name || asset.description) && (
+                <div className="space-y-2">
+                  {asset.name && (
+                    <Title level={4} className="mb-0">
+                      {getLanguage(asset.name)}
+                    </Title>
+                  )}
+                  {asset.description && (
+                    <Text className="text-base leading-relaxed text-gray-700">
+                      {getLanguage(asset.description)}
+                    </Text>
+                  )}
+                </div>
+              )}
+
+              {/* Divider between items (except last) */}
+              {index < mediaAssets.length - 1 && <Divider className="my-8" />}
+            </div>
+          ))}
         </div>
       ) : (
-        <div className="mb-6 text-center py-12 bg-gray-100 rounded-lg">
+        <div className="text-center py-12 bg-gray-100 rounded-lg">
           <Text className="text-gray-500">
             {getLanguage('NO_MEDIA') || 'Không có hình ảnh hoặc video'}
           </Text>
         </div>
       )}
-
-      {/* Additional Info */}
-      <div className="mt-8 space-y-4">
-        <div>
-          <div className="mt-1">
-            <span className="text-3xl font-bold">{getLanguage(item.name)}</span>
-          </div>
-        </div>
-        {item.description && (
-          <div>
-            <div className="mt-1">
-              <span className="text-cbase">
-                {getLanguage(item.description)}
-              </span>
-            </div>
-          </div>
-        )}
-      </div>
     </section>
   );
 }

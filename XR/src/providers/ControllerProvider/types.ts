@@ -1,3 +1,5 @@
+import { Vector3 } from 'three';
+
 export enum SqueezeState {
   IDLE = 'idle',
   START_PRESS = 'startPress',
@@ -9,11 +11,11 @@ export type ControllerState = {
   left: {
     squeeze: SqueezeState;
     trigger: SqueezeState;
-    position: [number, number, number];
+    position: Vector3;
   };
   right: {
     squeeze: SqueezeState;
     trigger: SqueezeState;
-    position: [number, number, number];
+    position: Vector3;
   };
 };

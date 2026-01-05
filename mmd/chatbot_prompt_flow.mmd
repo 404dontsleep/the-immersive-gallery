@@ -1,0 +1,20 @@
+---
+config:
+  theme: mc
+---
+flowchart TD
+    Start([Start: prompt language, context]) --> ValidateInput[Validate input<br/>language & context]
+    ValidateInput --> GetData[Get data from database]
+    GetData --> LOCTranslation[Update LOC according to user language<br/>Translate all content]
+    LOCTranslation --> PrepareSystemPrompt[Prepare system prompt<br/>Get SYSTEM_PROMPT template]
+    PrepareSystemPrompt --> CombineContext[Combine system prompt<br/>with context data]
+    CombineContext --> FormatRequest[Format request payload<br/>model, system, prompt, stream]
+    FormatRequest --> SendToModel[Request to chatbot service]
+    SendToModel --> QwenModel[Model Qwen2.5:7b]
+    QwenModel --> CheckData{Data exists?}
+    CheckData -->|No data| ReturnNoData[Return: No data available]
+    ReturnNoData --> End([End])
+    CheckData -->|Has data| StreamResponse[Stream response<br/>firstValueFrom Observable]
+    StreamResponse --> ReturnResult[Return result stream]
+    ReturnResult --> FrontendDisplay[Frontend displays the answer<br/>Render streaming response]
+    FrontendDisplay --> End([End])

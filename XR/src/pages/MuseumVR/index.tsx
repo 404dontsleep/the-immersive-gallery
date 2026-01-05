@@ -10,6 +10,7 @@ import { setPreferredColorScheme } from '@react-three/uikit';
 import SelectedItem from './Components/SelectedItem';
 import { ItemContextProvider } from '@/stores/ItemContext/item.store';
 import ControllerProvider from '@/providers/ControllerProvider/ControllerProvider';
+import WrapperMenu from './Components/Menu/Wrapper';
 
 setPreferredColorScheme('light');
 
@@ -34,7 +35,7 @@ export function MuseumVRPage() {
               <XROrigin>
                 <MuseumRoom />
                 <SelectedItem />
-                {/* <WrapperMenu /> */}
+                <WrapperMenu />
 
                 <CameraControls enabled={isOrbitControlsEnabled} />
               </XROrigin>

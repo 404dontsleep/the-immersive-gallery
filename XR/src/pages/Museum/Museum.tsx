@@ -11,7 +11,7 @@ export function MuseumPage() {
   const navigate = useNavigate();
 
   return (
-    <section className="max-w-5xl mx-auto bg-museum grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
+    <section className="max-w-5xl mx-auto bg-museum grid grid-cols-1 sm:grid-cols-2 gap-6 p-4">
       {categories.map((category) => (
         <div
           key={category.id}
@@ -30,7 +30,7 @@ export function MuseumPage() {
           </div>
           {/* Description & Button only appear on hover */}
           <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex flex-col justify-center items-center transition-opacity duration-300 p-4">
-            <span className="text-white text-center mb-6 text-xs">
+            <span className="text-white text-center mb-6">
               {getLanguage(category.description)}
             </span>
           </div>

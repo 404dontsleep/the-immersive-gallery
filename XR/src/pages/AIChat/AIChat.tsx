@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { PageLayout } from '@/components/layouts/PageLayout';
 import { Input, Button, Card, Typography, Avatar, Spin, Tooltip } from 'antd';
 import {
@@ -32,20 +32,19 @@ const chatbotService = new ChatbotService();
 
 export function AIChatPage() {
   const { language, getLanguage } = useLanguageStore();
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: getLanguage('AI_CHAT_WELCOME'),
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const welcomeMessage = {
+    id: '1',
+    role: 'assistant',
+    content: getLanguage('AI_CHAT_WELCOME'),
+    timestamp: new Date(),
   };
 
   useEffect(() => {
@@ -152,7 +151,7 @@ export function AIChatPage() {
             className="flex-1 overflow-y-auto px-4 sm:px-8 py-6 space-y-6 bg-transparent"
             style={{ scrollbarWidth: 'thin' }}
           >
-            {messages.map((msg) => (
+            {[welcomeMessage, ...messages].map((msg) => (
               <div
                 key={msg.id}
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} items-end`}

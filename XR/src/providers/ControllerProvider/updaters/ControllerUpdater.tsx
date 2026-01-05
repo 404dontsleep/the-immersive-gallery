@@ -2,6 +2,7 @@ import { useFrame } from '@react-three/fiber';
 import { useXRInputSourceState } from '@react-three/xr';
 import { SqueezeState } from '../types';
 import { useController } from '../useController';
+import { Vector3 } from 'three';
 
 const stateMap: Record<
   'default' | 'pressed',
@@ -56,7 +57,13 @@ export default function ControllerUpdater() {
       controllerStateRef!.right.trigger =
         stateMap[triggerRight.state][controllerStateRef!.right.trigger];
     }
+
+    controllerStateRef.left.position?.copy(
+      controllerLeft.object?.getWorldPosition(new Vector3()) ?? new Vector3(),
+    );
+    controllerStateRef.right.position?.copy(
+      controllerRight.object?.getWorldPosition(new Vector3()) ?? new Vector3(),
+    );
   });
   return null;
 }
-
