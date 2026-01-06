@@ -1,12 +1,7 @@
 import { MenuType, useMenuStore } from '@/stores/menu.store';
 import { Container } from '@react-three/uikit';
 import MenuCard from './MenuCard';
-import {
-  BookIcon,
-  ListIcon,
-  SettingsIcon,
-  HouseIcon,
-} from '@react-three/uikit-lucide';
+import { ListIcon, SettingsIcon } from '@react-three/uikit-lucide';
 
 export default function Home() {
   const { setCurrentMenu } = useMenuStore();
@@ -21,7 +16,7 @@ export default function Home() {
       overflow={'scroll'}
       scrollbarWidth={5}
     >
-      <MenuCard
+      {/* <MenuCard
         menuType={MenuType.HOME}
         title="Home"
         onClick={setCurrentMenu}
@@ -32,7 +27,7 @@ export default function Home() {
         title="Tutorial"
         onClick={setCurrentMenu}
         icon={<BookIcon height={64} width={64} />}
-      />
+      /> */}
       <MenuCard
         menuType={MenuType.ITEM_LIST}
         title="Item List"

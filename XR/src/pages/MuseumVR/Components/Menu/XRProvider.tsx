@@ -1,5 +1,4 @@
 import { MenuMode, useMenuStore } from '@/stores/menu.store';
-import { Line } from '@react-three/drei';
 import { Root } from '@react-three/uikit';
 import { XRSpace, useXRInputSourceState } from '@react-three/xr';
 import { useEffect } from 'react';
@@ -53,12 +52,12 @@ export default function XRProvider({ children }: XRProviderProps) {
   return (
     <XRSpace space={space}>
       <group position={configSpace.position} rotation={configSpace.rotation}>
-        <Line points={[0, 0, 0, 0.1, 0, 0]} color="red" />
+        {/* <Line points={[0, 0, 0, 0.1, 0, 0]} color="red" />
         <Line points={[0, 0, 0, 0, 0.1, 0]} color="green" />
-        <Line points={[0, 0, 0, 0, 0, 0.1]} color="blue" />
+        <Line points={[0, 0, 0, 0, 0, 0.1]} color="blue" /> */}
         <group position={[0, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
           <group position={[0.2, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <Root sizeX={0.4} sizeY={0.4} pixelSize={0.0005}>
+            <Root sizeX={0.4} sizeY={0.4} pixelSize={0.00036}>
               {children}
             </Root>
           </group>

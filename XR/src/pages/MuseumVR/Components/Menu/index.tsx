@@ -8,7 +8,6 @@ import {
   TabsTrigger,
 } from '@react-three/uikit-default';
 import ItemList from './ItemList';
-import Tutorial from './Tutorial';
 import Setting from './Setting';
 import Home from './Home';
 import { ChevronLeftIcon } from '@react-three/uikit-lucide';
@@ -38,19 +37,27 @@ export default function Menu() {
         value={currentMenu ?? ''}
         width={'100%'}
         height={orientation === Orientation.LANDSCAPE ? '80%' : '100%'}
-        maxWidth={1000}
+        // maxWidth={1000}
         backgroundColor={colors.background}
         backgroundOpacity={0.8}
         borderRadius={10}
       >
-        <TabsList width={'100%'} borderRadius={10} gap={10}>
+        <TabsList
+          width={'100%'}
+          borderRadius={10}
+          gap={10}
+          height={80}
+          borderBottomWidth={1}
+        >
           <TabsTrigger
             value={MenuType.HOME}
             onClick={() => handleChangeMenu(MenuType.HOME)}
             width={'100%'}
             display={'flex'}
-            alignItems={'flex-start'}
-            justifyContent={'flex-start'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            height={'100%'}
+            backgroundColor={'white'}
           >
             <ChevronLeftIcon height={20} width={20} />
             <Text fontSize={20} fontWeight={600} color={colors.primary}>
@@ -61,9 +68,11 @@ export default function Menu() {
             value={MenuType.TUTORIAL}
             onClick={() => setCurrentMenu(null)}
             width={'100%'}
-            display={mode === MenuMode.WEB ? 'flex' : 'none'}
-            alignItems={'flex-start'}
-            justifyContent={'flex-start'}
+            display={'flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            height={'100%'}
+            backgroundColor={'white'}
           >
             <Text fontSize={20} fontWeight={600} color={colors.primary}>
               Close Menu
@@ -73,9 +82,9 @@ export default function Menu() {
         <TabsContent value={MenuType.HOME} padding={20}>
           <Home />
         </TabsContent>
-        <TabsContent value={MenuType.TUTORIAL} padding={20}>
+        {/* <TabsContent value={MenuType.TUTORIAL} padding={20}>
           <Tutorial />
-        </TabsContent>
+        </TabsContent> */}
         <TabsContent value={MenuType.ITEM_LIST} padding={20}>
           <ItemList />
         </TabsContent>

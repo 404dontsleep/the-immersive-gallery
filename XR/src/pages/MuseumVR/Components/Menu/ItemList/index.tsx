@@ -35,12 +35,16 @@ export default function ItemList() {
         display={'flex'}
         flexDirection={'column'}
       >
-        <TabsList>
-          <TabsTrigger value="all">
+        <TabsList height={80}>
+          <TabsTrigger value="all" height={'100%'}>
             <Text>{getLanguage('ALL')}</Text>
           </TabsTrigger>
           {categories?.map((category) => (
-            <TabsTrigger key={category.id} value={category.id.toString()}>
+            <TabsTrigger
+              key={category.id}
+              value={category.id.toString()}
+              height={'100%'}
+            >
               <Text>{getLanguage(category.name)}</Text>
             </TabsTrigger>
           ))}
