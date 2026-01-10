@@ -96,7 +96,7 @@ const SelectedItemModal: React.FC<SelectedItemModalProps> = (props) => {
                       isListField
                       name={[field.name, 'id']}
                     >
-                      <SelectAssets />
+                      <SelectAssets style={{ width: '80%' }} />
                     </Form.Item>
                     <Button
                       type="dashed"

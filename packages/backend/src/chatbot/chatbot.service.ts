@@ -95,7 +95,14 @@ export class ChatbotService {
     let _systemPrompt: string;
     try {
       const jsonSystemPrompt = JSON.parse(systemPrompt);
-      jsonSystemPrompt.context = systemContext;
+      if (!jsonSystemPrompt.context) {
+        jsonSystemPrompt.context = systemContext;
+      } else {
+        jsonSystemPrompt.context = {
+          ...jsonSystemPrompt.context,
+          ...systemContext,
+        };
+      }
       _systemPrompt = JSON.stringify(jsonSystemPrompt);
     } catch (error) {
       _systemPrompt = `

@@ -13,13 +13,12 @@ export default function MuseumRoom() {
         />
       </IfInSessionMode>
       <IfInSessionMode allow={['immersive-ar']}>
-        {' '}
         <Environment
           preset="dawn"
           background={false}
           environmentIntensity={0.5}
           backgroundBlurriness={0.3}
-        />{' '}
+        />
       </IfInSessionMode>
     </group>
   );

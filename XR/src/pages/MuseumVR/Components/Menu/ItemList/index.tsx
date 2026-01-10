@@ -45,7 +45,9 @@ export default function ItemList() {
               value={category.id.toString()}
               height={'100%'}
             >
-              <Text>{getLanguage(category.name)}</Text>
+              <Text>
+                {getLanguage(category.name).slice(0, 20).concat('...')}
+              </Text>
             </TabsTrigger>
           ))}
         </TabsList>

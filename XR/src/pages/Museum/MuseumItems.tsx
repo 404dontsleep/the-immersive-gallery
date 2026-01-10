@@ -3,6 +3,7 @@ import useItemContext from '@/stores/ItemContext/useItemContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useLanguageStore } from '@/stores/language.store';
 import { Typography } from 'antd';
+import { AssetsItemType } from '@/shared/api';
 
 export function MuseumItemsByCategory() {
   const { categoryId } = useParams<{ categoryId: string }>();
@@ -23,7 +24,11 @@ export function MuseumItemsByCategory() {
           <AssetImage
             className="w-full h-[192px] object-cover rounded-lg"
             style={{ height: 192, objectFit: 'cover', width: '100%' }}
-            assetsId={item.assets?.[0]?.id || 0}
+            assetsId={
+              item.assets?.filter(
+                (asset) => asset.type === AssetsItemType.image,
+              )?.[0]?.id || 0
+            }
           />
           <div className="group-hover:opacity-0 opacity-100 transition-opacity duration-300 absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80 via-black/50 to-transparent p-4 pointer-events-none">
             <span className="text-white text-sm text-center font-semibold drop-shadow">

@@ -206,7 +206,12 @@ export default function LanguagePage() {
       title: 'Language Value',
       dataIndex: 'value',
       key: 'value',
-      render: (text: string) => <Text strong>{text}</Text>,
+      render: (text: string) => (
+        <Text style={{ maxWidth: '400px' }} strong ellipsis={{ tooltip: true }}>
+          {text}
+        </Text>
+      ),
+      width: 400,
     },
     {
       title: 'Actions',

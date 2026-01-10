@@ -64,7 +64,7 @@ export default function ItemCard({ item }: { item: Item }) {
             {getLanguage(item.name)}
           </Text>
           <Text fontSize={16} fontWeight={400}>
-            {getLanguage(item.description)}
+            {getLanguage(item.description).slice(0, 300)}...
           </Text>
         </Container>
       </Container>
